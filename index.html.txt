@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevate Pool & Spa Care — Engineer Tested. Pharmacist Approved.</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628; --navy-mid: #0d1f3c; --navy-light: #132848;
+    --cyan: #00d4ff; --white: #f0f6ff; --muted: #7a9ab8; --accent-gold: #f5c842;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+  h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+  .grid-bg { background-image: linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px); background-size: 60px 60px; }
+  .btn-primary { background: var(--cyan); color: var(--navy); font-family: 'Syne', sans-serif; font-weight: 700; padding: 14px 32px; border-radius: 4px; transition: all 0.2s ease; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,212,255,0.5); }
+  .product-card { background: var(--navy-light); border: 1px solid rgba(0,212,255,0.12); border-radius: 8px; transition: all 0.3s ease; }
+  .product-card:hover { border-color: var(--cyan); transform: translateY(-4px); }
+  .badge { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: var(--cyan); font-family: 'JetBrains Mono'; font-size: 0.7rem; padding: 4px 10px; border-radius: 2px; }
+  /* Notification Toast */
+  #vbot-toast { visibility: hidden; min-width: 300px; background-color: var(--cyan); color: var(--navy); text-align: center; border-radius: 4px; padding: 16px; position: fixed; z-index: 1000; right: 30px; top: 30px; font-weight: 800; font-family: 'Syne'; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+  #vbot-toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+  @keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
+  @keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
+</style>
+</head>
+<body>
+
+<div id="vbot-toast">🚀 ALERT: New Order Received via VBot</div>
+
+<nav class="fixed w-full z-50 bg-opacity-90 backdrop-blur-md border-b border-white/10 py-4 px-8 bg-[#0a1628]">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <span class="text-2xl">💧</span>
+        <div>
+            <div class="font-extrabold tracking-tight">ELEVATE</div>
+            <div class="text-[0.6rem] text-cyan-400 font-mono tracking-widest uppercase">Pool & Spa Care</div>
+        </div>
+    </div>
+    <div class="hidden md:flex gap-8 text-sm font-medium text-slate-400">
+        <a href="#chemicals" class="hover:text-cyan-400 transition">Chemical Lab</a>
+        <a href="#parts" class="hover:text-cyan-400 transition">Tech Parts</a>
+        <a href="#bundle" class="hover:text-cyan-400 transition">BioClean Kit</a>
+    </div>
+    <a href="#" class="btn-primary py-2 px-6 text-sm">Shop Now</a>
+  </div>
+</nav>
+
+<section class="grid-bg min-h-screen flex items-center pt-20 px-8">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <div>
+        <div class="text-cyan-400 font-mono text-xs tracking-widest mb-4 uppercase">Direct from China — Las Vegas Certified</div>
+        <h1 class="text-6xl font-extrabold leading-tight mb-6">The PJV24 <br><span class="text-cyan-400">Cordless Power.</span></h1>
+        <p class="text-slate-400 text-lg mb-8 leading-relaxed">Engineered for relentless suction with zero cord hassle. The ultimate choice for professional pool technicians and discerning homeowners.</p>
+        <div class="flex flex-wrap gap-4 mb-10">
+            <span class="badge">💊 Pharmacist Oversight</span>
+            <span class="badge">⚙️ Engineer Tested</span>
+        </div>
+        <button onclick="triggerVBot('PJV24 Vacuum')" class="btn-primary text-lg">🛒 Buy Now — $289.00</button>
+    </div>
+    <div class="relative flex justify-center">
+        <div class="w-80 h-80 rounded-full bg-gradient-to-br from-cyan-900/20 to-transparent border border-cyan-500/30 flex items-center justify-center animate-pulse">
+            <span class="text-9xl filter drop-shadow-[0_0_30px_rgba(0,212,255,0.5)]">🔌</span>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section id="chemicals" class="py-24 px-8 bg-[#0d1f3c]">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-16">
+        <h2 class="text-4xl font-extrabold mb-4">The Chemical Lab</h2>
+        <p class="text-slate-400">Pharmacist-curated sanitizers and reagents for hospital-grade water safety.</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+        <div class="product-card p-8">
+            <span class="text-4xl mb-6 block">📊</span>
+            <h3 class="text-xl font-bold mb-2">Hach 5-in-1 Strips</h3>
+            <p class="text-sm text-slate-400 mb-6">Clinical-grade reagent pads for precise pH, Alkalinity, and Hardness detection. Stability tested for accurate readings.</p>
+            <div class="text-2xl font-bold mb-6 text-cyan-400">$34.99</div>
+            <button onclick="triggerVBot('Hach Test Strips')" class="btn-primary w-full justify-center">Add to Cart</button>
+        </div>
+        <div class="product-card p-8">
+            <span class="text-4xl mb-6 block">🛡️</span>
+            <h3 class="text-xl font-bold mb-2">1-Inch Bromine Tabs</h3>
+            <p class="text-sm text-slate-400 mb-6">High-purity BCDMH formula. Slow-release delivery system optimized for high-temperature spa environments.</p>
+            <div class="text-2xl font-bold mb-6 text-cyan-400">$48.00</div>
+            <button onclick="triggerVBot('Bromine Tabs')" class="btn-primary w-full justify-center">Add to Cart</button>
+        </div>
+        <div class="product-card p-8">
+            <span class="text-4xl mb-6 block">🫧</span>
+            <h3 class="text-xl font-bold mb-2">SpaPure Defoamer</h3>
+            <p class="text-sm text-slate-400 mb-6">Concentrated silicone emulsion that breaks surface tension instantly. Pharmacist-approved for skin safety.</p>
+            <div class="text-2xl font-bold mb-6 text-cyan-400">$22.99</div>
+            <button onclick="triggerVBot('SpaPure Defoamer')" class="btn-primary w-full justify-center">Add to Cart</button>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section id="parts" class="py-24 px-8 grid-bg">
+    <div class="max-w-7xl mx-auto border border-cyan-500/30 bg-[#0a1628] rounded-2xl overflow-hidden grid md:grid-cols-2">
+        <div class="p-12 bg-gradient-to-br from-slate-900 to-black flex flex-col justify-center items-center text-center">
+            <span class="text-8xl mb-6">🔥</span>
+            <div class="font-mono text-cyan-400 text-sm tracking-widest mb-2">GECKO SYSTEMS</div>
+            <h2 class="text-3xl font-bold">5.5KW Heater Assembly</h2>
+            <p class="text-slate-500 text-xs mt-2">PART # 9920-101449</p>
+        </div>
+        <div class="p-12">
+            <h3 class="text-2xl font-bold mb-4">Direct-Fit OEM Replacement</h3>
+            <ul class="text-slate-400 space-y-3 mb-8 text-sm">
+                <li>✓ Titanium Element for high-bromine resistance</li>
+                <li>✓ Plug-and-play IN.YE and IN.XE compatibility</li>
+                <li>✓ Includes Gaskets & High-Limit sensors</li>
+            </ul>
+            <div class="text-4xl font-extrabold mb-8">$289.00</div>
+            <button onclick="triggerVBot('Gecko Heater')" class="btn-primary w-full justify-center">🛒 Purchase Part</button>
+        </div>
+    </div>
+</section>
+
+<footer class="py-12 border-t border-white/10 text-center">
+    <p class="text-slate-500 text-xs">© 2025 Elevate Pool & Spa Care. | Technical Oversight by VTEK Bizcorp.</p>
+</footer>
+
+<script>
+    function triggerVBot(product) {
+        const toast = document.getElementById("vbot-toast");
+        toast.innerHTML = `🚀 ALERT: New Order for ${product} via VBot`;
+        toast.className = "show";
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        console.log(`VBot Log: Transaction initiated for ${product}`);
+    }
+</script>
+
+</body>
+</html>
