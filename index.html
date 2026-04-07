@@ -21,6 +21,117 @@
     --gold:      #f5c842;
     --green:     #00e08a;
   }
+
+  /* ══════════════════════════════════════════
+     LIGHT MODE — overrides all CSS variables
+  ══════════════════════════════════════════ */
+  html.light-mode {
+    --navy:      #f0f4f8;
+    --navy-mid:  #e2eaf2;
+    --navy-card: #ffffff;
+    --navy-hi:   #dde6f0;
+    --cyan:      #0077aa;
+    --cyan-dim:  #005f88;
+    --cyan-pale: rgba(0,119,170,0.1);
+    --white:     #0d1f33;
+    --muted:     #5a7a99;
+    --gold:      #b8860b;
+    --green:     #1a7a3e;
+  }
+
+  /* Body & backgrounds */
+  html.light-mode body                { background:#f0f4f8 !important; color:#0d1f33 !important; }
+  html.light-mode .grid-bg            { background-color:#f0f4f8 !important;
+                                        background-image:
+                                          linear-gradient(rgba(0,119,170,0.06) 1px, transparent 1px),
+                                          linear-gradient(90deg, rgba(0,119,170,0.06) 1px, transparent 1px) !important; }
+  html.light-mode .text-glow          { text-shadow:0 0 30px rgba(0,119,170,0.3) !important; }
+  html.light-mode .glow               { box-shadow:0 0 40px rgba(0,119,170,0.15), 0 0 80px rgba(0,119,170,0.06) !important; }
+  html.light-mode .div-cyan           { background:linear-gradient(90deg,transparent,rgba(0,119,170,0.3),transparent) !important; opacity:1 !important; }
+  html.light-mode .scan               { background:linear-gradient(90deg,transparent,rgba(0,119,170,0.3),transparent) !important; }
+
+  /* Nav */
+  html.light-mode #nav                { background:rgba(240,244,248,0.92) !important; border-bottom-color:rgba(0,119,170,0.2) !important; }
+  html.light-mode #nav a[href="#"] > div { border-color:var(--cyan) !important; }
+  html.light-mode #nav .nav-links a   { color:#5a7a99 !important; }
+
+  /* Trust bar */
+  html.light-mode section[style*="background:var(--navy-mid)"] { background:#e2eaf2 !important; }
+
+  /* Badges */
+  html.light-mode .badge              { background:rgba(0,119,170,0.09) !important; border-color:rgba(0,119,170,0.25) !important; color:#0077aa !important; }
+  html.light-mode .badge-gold         { background:rgba(184,134,11,0.09) !important; border-color:rgba(184,134,11,0.3) !important; color:#b8860b !important; }
+  html.light-mode .badge-green        { background:rgba(26,122,62,0.09) !important; border-color:rgba(26,122,62,0.28) !important; color:#1a7a3e !important; }
+  html.light-mode .badge-red          { background:rgba(200,50,50,0.09) !important; border-color:rgba(200,50,50,0.25) !important; color:#c83232 !important; }
+
+  /* Buttons */
+  html.light-mode .btn-cyan           { background:#0077aa !important; color:#fff !important; }
+  html.light-mode .btn-cyan:hover     { background:#005f88 !important; box-shadow:0 0 20px rgba(0,119,170,0.35) !important; }
+  html.light-mode .btn-outline        { color:#0077aa !important; border-color:#0077aa !important; }
+  html.light-mode .btn-outline:hover  { background:rgba(0,119,170,0.08) !important; }
+
+  /* Sec label */
+  html.light-mode .sec-label          { color:#0077aa !important; }
+  html.light-mode .sec-label::before  { background:#0077aa !important; }
+
+  /* Hero */
+  html.light-mode .hero-right > div   { background:radial-gradient(circle at 38% 38%,#c8ddf0,#dde9f5) !important; border-color:rgba(0,119,170,0.25) !important; }
+  html.light-mode .hero-right > div > div:nth-child(1),
+  html.light-mode .hero-right > div > div:nth-child(2) { border-color:rgba(0,119,170,0.1) !important; }
+
+  /* Float tags */
+  html.light-mode .mono[style*="background:var(--navy-card)"] { background:#fff !important; color:#0077aa !important; border-color:rgba(0,119,170,0.25) !important; }
+
+  /* Product cards */
+  html.light-mode .pcard              { background:#fff !important; border-color:rgba(0,119,170,0.15) !important; }
+  html.light-mode .pcard:hover        { border-color:rgba(0,119,170,0.45) !important; box-shadow:0 20px 50px rgba(0,0,0,0.1),0 0 24px rgba(0,119,170,0.1) !important; }
+  html.light-mode .pcard-img          { background:linear-gradient(135deg,#dde9f5,#eaf1f8) !important; }
+  html.light-mode .hi-box             { background:rgba(0,119,170,0.06) !important; border-color:rgba(0,119,170,0.18) !important; }
+  html.light-mode .hi-box div + div > div:first-child { color:#0077aa !important; }
+  html.light-mode .hi-box div + div > div:last-child  { color:#5a7a99 !important; }
+  html.light-mode .spec               { border-color:rgba(0,0,0,0.07) !important; }
+  html.light-mode .spec > span:first-child { color:#5a7a99 !important; }
+  html.light-mode .spec > span:last-child  { color:#0077aa !important; }
+  html.light-mode .price              { color:#0d1f33 !important; }
+  html.light-mode .price-old          { color:#5a7a99 !important; }
+  html.light-mode .mono               { color:#0077aa !important; }
+
+  /* Tutorial section */
+  html.light-mode #tutorials          { background:#f0f4f8 !important; }
+  html.light-mode #tutorials h2 span  { color:#0077aa !important; }
+
+  /* Gecko heater card */
+  html.light-mode .tech-card          { background:linear-gradient(135deg,#eaf1f8,#f5f8fb) !important; border-color:rgba(0,119,170,0.3) !important; }
+  html.light-mode .tech-card::before  { background:linear-gradient(90deg,transparent,rgba(0,119,170,0.5),transparent) !important; }
+  html.light-mode .tech-inner > div:first-child { background:linear-gradient(135deg,#dde9f5,#eaf2f8) !important; border-right-color:rgba(0,119,170,0.15) !important; }
+  html.light-mode .feat               { border-color:rgba(0,0,0,0.07) !important; color:#0d1f33 !important; }
+  html.light-mode .feat .chk          { color:#0077aa !important; }
+  html.light-mode .ribbon             { background:#0077aa !important; color:#fff !important; }
+  html.light-mode .tech-inner h2      { color:#0d1f33 !important; }
+  html.light-mode .tech-inner p       { color:#5a7a99 !important; }
+
+  /* Spec mini-grid inside heater */
+  html.light-mode .tech-inner > div:first-child > div[style*="grid-template-columns"] > div {
+    background:rgba(0,119,170,0.07) !important; border-color:rgba(0,119,170,0.15) !important;
+  }
+
+  /* Bundle */
+  html.light-mode .bundle-wrap        { background:linear-gradient(135deg,#eaf1f8,#f5f8fb) !important; border-color:rgba(0,119,170,0.22) !important; }
+  html.light-mode .bundle-wrap::before{ background:linear-gradient(90deg,#0077aa,#004f77,#0077aa) !important; }
+  html.light-mode .inc-item           { background:rgba(0,119,170,0.05) !important; border-color:rgba(0,119,170,0.12) !important; }
+  html.light-mode .inc-item:hover     { border-color:rgba(0,119,170,0.35) !important; }
+  html.light-mode .bundle-inner > div:last-child > div:first-child { background:rgba(0,119,170,0.06) !important; border-color:rgba(0,119,170,0.18) !important; }
+  html.light-mode .bundle-inner > div:last-child > div:first-child > div[style*="font-size:4rem"] { color:#0077aa !important; text-shadow:none !important; }
+
+  /* Footer */
+  html.light-mode footer              { background:#1a2e45 !important; }
+  html.light-mode .pharma             { background:rgba(255,255,255,0.07) !important; border-color:rgba(255,255,255,0.2) !important; }
+  html.light-mode .pharma > div:last-child > div:first-child { color:#66ccee !important; }
+
+  /* Toggle button light state */
+  html.light-mode #theme-toggle       { background:#0077aa !important; color:#fff !important; border-color:#0077aa !important; }
+  html.light-mode #theme-toggle:hover { background:#005f88 !important; }
+
   *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
   body {
@@ -622,6 +733,13 @@
     <a href="#bundle"    style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Bundle Deals</a>
     <a href="#"          style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Today's Deals</a>
     <a href="#"          style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Customer Service</a>
+    <button onclick="toggleTheme()" id="mob-theme-toggle"
+      style="background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.25);
+             border-radius:12px;padding:3px 12px;font-size:.75rem;cursor:pointer;
+             font-family:'Syne',sans-serif;font-weight:700;flex-shrink:0;
+             display:flex;align-items:center;gap:5px;white-space:nowrap;">
+      <span id="mob-theme-icon">☀️</span> <span id="mob-theme-label">Light</span>
+    </button>
   </div>
 </div>
 
@@ -639,7 +757,17 @@
       <a href="#parts"     style="color:var(--muted);font-size:.85rem;text-decoration:none;font-weight:500;transition:color .2s" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='#6a90b0'">Parts</a>
       <a href="#tutorials" style="color:var(--muted);font-size:.85rem;text-decoration:none;font-weight:500;transition:color .2s" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='#6a90b0'">Tutorials</a>
       <a href="#bundle"    style="color:var(--muted);font-size:.85rem;text-decoration:none;font-weight:500;transition:color .2s" onmouseover="this.style.color='#00d4ff'" onmouseout="this.style.color='#6a90b0'">Bundle</a>
-      <a href="#" class="btn btn-cyan" style="padding:9px 22px;font-size:.8rem;">🛒 Shop Now</a>
+      <button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode"
+  style="display:flex;align-items:center;gap:7px;
+         background:rgba(0,212,255,0.1);color:var(--cyan);
+         border:1.5px solid rgba(0,212,255,0.3);border-radius:20px;
+         padding:8px 16px;cursor:pointer;font-family:'Syne',sans-serif;
+         font-weight:700;font-size:.78rem;letter-spacing:.04em;
+         transition:all .25s ease;white-space:nowrap;">
+  <span id="theme-icon">☀️</span>
+  <span id="theme-label">Light Mode</span>
+</button>
+<a href="#" class="btn btn-cyan" style="padding:9px 22px;font-size:.8rem;">🛒 Shop Now</a>
     </div>
   </div>
 </nav>
@@ -1211,6 +1339,39 @@
 
 
 <script>
+  /* ── Theme toggle ── */
+  function toggleTheme(){
+    const html = document.documentElement;
+    const isLight = html.classList.toggle('light-mode');
+    localStorage.setItem('ep-theme', isLight ? 'light' : 'dark');
+    updateToggleUI(isLight);
+  }
+  function updateToggleUI(isLight){
+    const icon  = document.getElementById('theme-icon');
+    const label = document.getElementById('theme-label');
+    const mIcon = document.getElementById('mob-theme-icon');
+    const mLabel= document.getElementById('mob-theme-label');
+    if(isLight){
+      if(icon)  icon.textContent  = '🌙';
+      if(label) label.textContent = 'Dark Mode';
+      if(mIcon)  mIcon.textContent  = '🌙';
+      if(mLabel) mLabel.textContent = 'Dark';
+    } else {
+      if(icon)  icon.textContent  = '☀️';
+      if(label) label.textContent = 'Light Mode';
+      if(mIcon)  mIcon.textContent  = '☀️';
+      if(mLabel) mLabel.textContent = 'Light';
+    }
+  }
+  /* Restore saved preference */
+  (function(){
+    const saved = localStorage.getItem('ep-theme');
+    if(saved === 'light'){
+      document.documentElement.classList.add('light-mode');
+      updateToggleUI(true);
+    }
+  })();
+
   function checkMobile(){
     const mob = document.getElementById('mob-nav');
     const mobSearch = document.getElementById('mob-search');
