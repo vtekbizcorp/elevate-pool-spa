@@ -251,11 +251,380 @@
     .chem-grid { grid-template-columns:1fr !important; }
     .footer-grid { grid-template-columns:1fr !important; }
   }
+
+  /* ═══════════════════════════════════════════
+     AMAZON-STYLE MOBILE LAYOUT (≤ 600px)
+  ═══════════════════════════════════════════ */
+  @media(max-width:600px){
+
+    /* ── Reset body to light Amazon feel ── */
+    body { background:#f0f2f2 !important; color:#0f1111 !important; }
+
+    /* ── Amazon-style mobile nav ── */
+    #nav {
+      background:#131921 !important;
+      border-bottom:3px solid #f90 !important;
+      backdrop-filter:none !important;
+    }
+    #mob-nav { display:flex !important; }
+
+    /* ── Hero → Amazon product hero ── */
+    section.grid-bg:first-of-type {
+      background:#fff !important;
+      background-image:none !important;
+      min-height:auto !important;
+      padding-top:66px !important;
+    }
+    .hero-grid {
+      grid-template-columns:1fr !important;
+      padding:0 !important;
+      gap:0 !important;
+    }
+    /* Product image area */
+    .hero-right {
+      background:#fff;
+      padding:20px 16px 0;
+      justify-content:center !important;
+      border-bottom:1px solid #ddd;
+    }
+    .float { animation:none !important; }
+    .hero-right > div {
+      width:260px !important; height:260px !important;
+      border:none !important;
+      box-shadow:none !important;
+      background:transparent !important;
+    }
+    .hero-right > div > div:nth-child(1),
+    .hero-right > div > div:nth-child(2) { display:none; }
+    /* Float tags hidden on mobile */
+    .hero-right > div > div:last-child,
+    .hero-right > div > div:nth-last-child(2) { display:none !important; }
+
+    /* Hero text block → Amazon product detail */
+    .hero-grid > div:first-child {
+      background:#fff;
+      padding:14px 16px 0 !important;
+      text-align:left !important;
+    }
+    /* Category breadcrumb style */
+    .hero-grid .sec-label {
+      color:#007185 !important;
+      font-size:.7rem !important;
+      letter-spacing:0 !important;
+      text-transform:none !important;
+      font-family:'DM Sans',sans-serif !important;
+    }
+    .hero-grid .sec-label::before { display:none; }
+
+    /* Product title */
+    .hero-grid h1 {
+      font-size:1.35rem !important;
+      font-weight:400 !important;
+      color:#0f1111 !important;
+      text-shadow:none !important;
+      margin-bottom:6px !important;
+      font-family:'DM Sans',sans-serif !important;
+      line-height:1.3 !important;
+    }
+    .hero-grid h1 span { color:#0f1111 !important; text-shadow:none !important; }
+
+    /* Rating stars row */
+    .hero-grid .fade-up.d4 {
+      display:flex !important;
+      flex-direction:row !important;
+      align-items:center !important;
+      gap:6px !important;
+      max-width:100% !important;
+      margin-top:4px !important;
+      margin-bottom:8px !important;
+      padding-bottom:8px;
+      border-bottom:1px solid #ddd;
+    }
+    .hero-grid .stat { font-size:1rem !important; color:#007185 !important; }
+    .hero-grid .fade-up.d4 > div { padding:0 8px !important; border:none !important; }
+    .hero-grid .fade-up.d4 > div > div:last-child { font-size:.72rem !important; color:#565959 !important; }
+
+    /* Price block */
+    .hero-grid p.fade-up { display:none !important; }
+    .hero-grid .fade-up.d2[style*="flex-wrap:wrap;gap:8px"] { display:none !important; }
+
+    /* Amazon price */
+    .hero-grid .fade-up.d3 {
+      flex-direction:column !important;
+      align-items:flex-start !important;
+      gap:10px !important;
+      padding:10px 0 !important;
+      border-bottom:1px solid #ddd;
+      margin-bottom:10px !important;
+    }
+    /* Buy Now → Amazon orange */
+    .hero-grid .btn-cyan {
+      background:#f90 !important;
+      color:#111 !important;
+      border-radius:20px !important;
+      width:100% !important;
+      justify-content:center !important;
+      font-size:.9rem !important;
+      padding:12px !important;
+      box-shadow:0 2px 5px rgba(213,217,217,.5) !important;
+      border:1px solid #f90 !important;
+    }
+    .hero-grid .btn-cyan:hover { background:#e47911 !important; box-shadow:none !important; transform:none !important; }
+    /* Add to Cart → Amazon yellow */
+    .hero-grid .btn-outline {
+      background:#ffd814 !important;
+      color:#111 !important;
+      border-color:#ffd814 !important;
+      border-radius:20px !important;
+      width:100% !important;
+      justify-content:center !important;
+      font-size:.9rem !important;
+      padding:12px !important;
+      box-shadow:0 2px 5px rgba(213,217,217,.5) !important;
+    }
+    .hero-grid .btn-outline:hover { background:#f7ca00 !important; box-shadow:none !important; }
+
+    /* ── Trust bar → Amazon Prime-style strip ── */
+    section[style*="background:var(--navy-mid)"] {
+      background:#232f3e !important;
+    }
+    .trust-bar > div { color:#ccc !important; font-size:.75rem !important; }
+    .trust-bar > div[style*="width:1px"] { background:rgba(255,255,255,0.15) !important; height:16px !important; }
+
+    /* ── Tutorials section ── */
+    section#tutorials {
+      background:#fff !important;
+      background-image:none !important;
+      padding:20px 12px !important;
+    }
+    section#tutorials h2 { font-size:1.3rem !important; color:#0f1111 !important; font-weight:700 !important; }
+    section#tutorials h2 span { color:#c7511f !important; }
+    section#tutorials .sec-label { color:#c7511f !important; }
+    section#tutorials p { color:#565959 !important; font-size:.85rem !important; }
+    section#tutorials .badge {
+      background:#f0f2f2 !important; border-color:#ddd !important;
+      color:#565959 !important; font-family:'DM Sans',sans-serif !important;
+    }
+
+    /* ── Chemical Lab ── */
+    section#chemicals {
+      background:#f0f2f2 !important;
+      padding:20px 12px !important;
+    }
+    section#chemicals h2 { color:#0f1111 !important; font-size:1.3rem !important; font-weight:700 !important; }
+    section#chemicals h2 span { color:#c7511f !important; }
+    section#chemicals .sec-label { color:#c7511f !important; }
+    .chem-grid { grid-template-columns:1fr !important; gap:12px !important; }
+
+    /* Amazon product card style */
+    .pcard {
+      background:#fff !important;
+      border:1px solid #ddd !important;
+      border-radius:8px !important;
+      box-shadow:0 2px 5px rgba(15,17,17,.1) !important;
+    }
+    .pcard:hover {
+      transform:none !important;
+      box-shadow:0 2px 5px rgba(15,17,17,.15) !important;
+      border-color:#ddd !important;
+      animation:none !important;
+    }
+    .pcard-img { background:#fff !important; height:200px !important; }
+    .pcard-img img { filter:none !important; }
+
+    /* Card text */
+    .pcard .sec-label { color:#c7511f !important; font-size:.62rem !important; }
+    .pcard h3 { color:#0f1111 !important; font-size:1rem !important; font-weight:700 !important; }
+    .pcard .mono { color:#565959 !important; }
+    .hi-box {
+      background:#FEF9E7 !important;
+      border-color:#f0c14b !important;
+    }
+    .hi-box div:first-child + div > div:first-child { color:#c7511f !important; }
+    .hi-box div:first-child + div > div:last-child { color:#565959 !important; }
+    .spec { border-color:#f0f2f2 !important; }
+    .spec > span:first-child { color:#565959 !important; }
+    .spec > span:last-child { color:#c7511f !important; }
+    .price { color:#B12704 !important; }
+
+    /* Amazon cart buttons on product cards */
+    .pcard .btn-cyan {
+      background:#f90 !important; color:#111 !important;
+      border-radius:20px !important; border:1px solid #f90 !important;
+      box-shadow:0 2px 5px rgba(213,217,217,.5) !important;
+      font-size:.8rem !important; padding:9px 18px !important;
+    }
+    .pcard .btn-cyan:hover { background:#e47911 !important; transform:none !important; box-shadow:none !important; }
+    .badge { font-family:'DM Sans',sans-serif !important; }
+    .badge-gold { background:#FEF9E7 !important; border-color:#f0c14b !important; color:#c7511f !important; }
+    .badge-green { background:#e6f4ea !important; border-color:#5c9e6e !important; color:#256029 !important; }
+
+    /* ── Parts section ── */
+    section#parts {
+      background:#f0f2f2 !important;
+      background-image:none !important;
+      padding:20px 12px !important;
+    }
+    section#parts h2 { color:#0f1111 !important; font-size:1.3rem !important; font-weight:700 !important; }
+    section#parts h2 span { color:#c7511f !important; }
+    section#parts .sec-label { color:#c7511f !important; }
+
+    .tech-card {
+      background:#fff !important;
+      border:1px solid #ddd !important;
+      border-radius:8px !important;
+    }
+    .tech-card::before { display:none; }
+    .tech-inner { grid-template-columns:1fr !important; }
+    /* Heater image panel */
+    .tech-inner > div:first-child {
+      background:#fff !important;
+      border-right:none !important;
+      border-bottom:1px solid #eee !important;
+      padding:20px !important;
+    }
+    .tech-inner > div:first-child .mono { color:#565959 !important; }
+    .tech-inner > div:last-child { padding:20px !important; }
+    .tech-inner h2 { color:#0f1111 !important; font-size:1.3rem !important; font-weight:700 !important; }
+    .tech-inner p { color:#565959 !important; font-size:.85rem !important; }
+    .feat { border-color:#f0f2f2 !important; color:#0f1111 !important; }
+    .feat .chk { color:#e47911 !important; }
+    .ribbon { background:#c7511f !important; }
+
+    /* Spec mini-grid inside heater */
+    .tech-inner > div:first-child > div[style*="grid-template-columns"] > div {
+      background:#f0f2f2 !important; border-color:#ddd !important;
+    }
+    .tech-inner > div:first-child > div[style*="grid-template-columns"] .mono { color:#c7511f !important; }
+    .tech-inner > div:first-child > div[style*="grid-template-columns"] div:last-child { color:#565959 !important; }
+
+    /* Tech buttons */
+    .tech-inner .btn-cyan {
+      background:#f90 !important; color:#111 !important;
+      border-radius:20px !important; border:1px solid #f90 !important;
+      box-shadow:0 2px 5px rgba(213,217,217,.5) !important;
+      width:100% !important; justify-content:center !important;
+    }
+    .tech-inner .btn-outline {
+      background:#ffd814 !important; color:#111 !important;
+      border-color:#ffd814 !important; border-radius:20px !important;
+      width:100% !important; justify-content:center !important;
+    }
+    .price-old { color:#565959 !important; }
+    .badge-green { background:#e6f4ea !important; border-color:#5c9e6e !important; color:#256029 !important; }
+
+    /* ── Bundle section ── */
+    section#bundle {
+      background:#f0f2f2 !important;
+      padding:20px 12px !important;
+    }
+    section#bundle h2 { color:#0f1111 !important; font-size:1.3rem !important; font-weight:700 !important; }
+    section#bundle h2 span { color:#c7511f !important; }
+    section#bundle .sec-label { color:#c7511f !important; }
+    section#bundle > div > p { color:#565959 !important; }
+
+    .bundle-wrap {
+      background:#fff !important;
+      border:1px solid #ddd !important;
+      border-radius:8px !important;
+      padding:16px !important;
+    }
+    .bundle-wrap::before { display:none; }
+    .bundle-inner { grid-template-columns:1fr !important; gap:20px !important; }
+    .bundle-inner > div:first-child > .mono { color:#c7511f !important; }
+    .inc-item {
+      background:#f0f2f2 !important;
+      border-color:#ddd !important;
+    }
+    .inc-item:hover { border-color:#c7511f !important; }
+    .inc-item > div[style*="font-family:'Syne'"] { color:#0f1111 !important; }
+    .inc-item > div > div:last-child { color:#565959 !important; }
+    .inc-item > .mono { color:#c7511f !important; }
+    /* Pricing box */
+    .bundle-inner > div:last-child > div:first-child {
+      background:#FEF9E7 !important;
+      border-color:#f0c14b !important;
+    }
+    .bundle-inner > div:last-child > div:first-child .mono { color:#565959 !important; }
+    .bundle-inner > div:last-child > div:first-child > div[style*="font-size:4rem"] {
+      color:#B12704 !important;
+      text-shadow:none !important;
+    }
+    .bundle-inner > div:last-child > div:first-child > div[style*="font-size:.78rem"] { color:#565959 !important; }
+    /* Bundle CTA */
+    .bundle-inner .btn-cyan {
+      background:#f90 !important; color:#111 !important;
+      border-radius:20px !important; border:1px solid #f90 !important;
+      box-shadow:0 2px 5px rgba(213,217,217,.5) !important;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background:#232f3e !important;
+      border-top:none !important;
+      padding:32px 16px 20px !important;
+    }
+    .footer-grid { grid-template-columns:1fr !important; gap:24px !important; }
+    footer a { color:#ddd !important; }
+    footer a:hover { color:#f90 !important; }
+    .pharma {
+      background:rgba(255,255,255,0.07) !important;
+      border-color:rgba(255,255,255,0.15) !important;
+    }
+    .pharma > div:last-child > div:first-child { color:#f90 !important; }
+
+    /* Scan line off on mobile */
+    .scan { display:none !important; }
+
+    /* Section dividers */
+    .div-cyan { background:#ddd !important; opacity:1 !important; }
+
+    /* Amazon-style mobile search bar in nav */
+    #mob-search {
+      display:flex !important;
+      align-items:center;
+      background:#fff;
+      border-radius:4px;
+      margin:0 8px;
+      overflow:hidden;
+      flex:1;
+      height:36px;
+    }
+    #mob-search input {
+      flex:1; border:none; outline:none;
+      padding:0 10px; font-size:.85rem; color:#0f1111;
+      background:transparent;
+    }
+    #mob-search button {
+      background:#f90; border:none; cursor:pointer;
+      padding:0 14px; height:100%; font-size:1rem;
+    }
+  }
+
 </style>
 </head>
 <body>
 
 <!-- ══════════════ NAV ══════════════ -->
+
+<!-- Amazon-style mobile nav extras -->
+<div id="mob-nav" style="display:none;">
+  <div style="background:#131921;padding:6px 10px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #3a4553;">
+    <div id="mob-search" style="display:none;">
+      <input type="text" placeholder="Search pool &amp; spa products...">
+      <button>🔍</button>
+    </div>
+  </div>
+  <div style="background:#232f3e;padding:7px 12px;display:flex;gap:16px;overflow-x:auto;white-space:nowrap;scrollbar-width:none;border-bottom:1px solid #3a4553;">
+    <a href="#chemicals" style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Chemicals</a>
+    <a href="#parts"     style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Parts</a>
+    <a href="#tutorials" style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Tutorials</a>
+    <a href="#bundle"    style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Bundle Deals</a>
+    <a href="#"          style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Today's Deals</a>
+    <a href="#"          style="color:#ddd;font-size:.78rem;text-decoration:none;flex-shrink:0;">Customer Service</a>
+  </div>
+</div>
+
 <nav id="nav">
   <div style="max-width:1200px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between;">
     <a href="#" style="display:flex;align-items:center;gap:11px;text-decoration:none;">
@@ -839,6 +1208,22 @@
     </div>
   </div>
 </footer>
+
+
+<script>
+  function checkMobile(){
+    const mob = document.getElementById('mob-nav');
+    const mobSearch = document.getElementById('mob-search');
+    if(window.innerWidth <= 600){
+      if(mob){ mob.style.display='block'; mob.style.marginTop='66px'; }
+      if(mobSearch){ mobSearch.style.display='flex'; }
+    } else {
+      if(mob){ mob.style.display='none'; }
+    }
+  }
+  checkMobile();
+  window.addEventListener('resize', checkMobile);
+</script>
 
 </body>
 </html>
