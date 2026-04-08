@@ -712,6 +712,21 @@
     }
   }
 
+
+  
+  @keyframes shake {
+    0%,100%{ transform:translateX(0); }
+    20%    { transform:translateX(-8px); }
+    40%    { transform:translateX(8px); }
+    60%    { transform:translateX(-5px); }
+    80%    { transform:translateX(5px); }
+  }
+
+  @keyframes fabPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(0,212,255,0.35); }
+    50%       { box-shadow: 0 4px 32px rgba(0,212,255,0.65), 0 0 0 8px rgba(0,212,255,0.08); }
+  }
+
 </style>
 </head>
 <body>
@@ -904,7 +919,7 @@
       </div>
       <!-- Iframe -->
       <div style="position:relative;width:100%;padding-bottom:50%;background:#050d18;">
-        <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+        <iframe id="yt-embed" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
           src="https://www.youtube.com/embed/fH6Dw1xJLoM?rel=0&modestbranding=1"
           title="Master Your Pool &amp; Spa — Tutorials by Ben"
           allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
@@ -1384,7 +1399,546 @@
   }
   checkMobile();
   window.addEventListener('resize', checkMobile);
+
+
 </script>
 
+
+
+
+<!-- ══════════════════════════════════════════════════════════
+     ADMIN PORTAL — accessible via URL hash #admin-portal
+     Full-screen overlay, password protected
+══════════════════════════════════════════════════════════ -->
+<div id="admin-portal" style="
+  display:none; position:fixed; inset:0; z-index:10000;
+  background:#06101e; overflow-y:auto;
+  font-family:'DM Sans',sans-serif;
+">
+
+  <!-- Portal background grid -->
+  <div style="position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);
+    background-size:48px 48px;"></div>
+
+  <!-- Radial glow -->
+  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:800px;height:400px;pointer-events:none;
+    background:radial-gradient(ellipse,rgba(0,212,255,0.07) 0%,transparent 70%);"></div>
+
+  <!-- ── LOGIN SCREEN ── -->
+  <div id="ap-login" style="
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:40px 20px;
+    position:relative;
+  ">
+    <!-- Brand mark -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:48px;">
+      <div style="width:46px;height:46px;border-radius:50%;border:2px solid #00d4ff;
+        display:flex;align-items:center;justify-content:center;font-size:1.3rem;
+        box-shadow:0 0 20px rgba(0,212,255,0.3);">💧</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;
+          color:#e8f4ff;letter-spacing:.04em;">ELEVATE</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.56rem;
+          color:#00d4ff;letter-spacing:.15em;">POOL &amp; SPA CARE</div>
+      </div>
+    </div>
+
+    <!-- Login card -->
+    <div style="
+      width:100%;max-width:420px;
+      background:#0b1a30;
+      border:1.5px solid rgba(0,212,255,0.2);
+      border-radius:16px;overflow:hidden;
+      box-shadow:0 32px 80px rgba(0,0,0,0.7), 0 0 60px rgba(0,212,255,0.06);
+    ">
+      <!-- Card header -->
+      <div style="background:#142848;padding:28px 32px 24px;text-align:center;
+        border-bottom:1px solid rgba(0,212,255,0.12);">
+        <div style="width:64px;height:64px;border-radius:50%;
+          background:rgba(0,212,255,0.08);border:1.5px solid rgba(0,212,255,0.25);
+          margin:0 auto 14px;display:flex;align-items:center;justify-content:center;
+          font-size:1.8rem;box-shadow:0 0 24px rgba(0,212,255,0.15);">🔐</div>
+        <h2 style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.35rem;
+          color:#e8f4ff;margin-bottom:6px;">Admin Portal</h2>
+        <p style="font-size:.82rem;color:#6a90b0;line-height:1.5;">
+          Authorized personnel only.<br>Manage tutorial video content.
+        </p>
+      </div>
+
+      <!-- Card body -->
+      <div style="padding:28px 32px;">
+
+        <!-- Username field -->
+        <div style="margin-bottom:16px;">
+          <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+            color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
+            display:block;margin-bottom:8px;">Username</label>
+          <div style="position:relative;">
+            <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);
+              font-size:.95rem;color:#6a90b0;">👤</span>
+            <input id="ap-user-input" type="text" placeholder="admin"
+              onkeydown="if(event.key==='Enter') document.getElementById('ap-pwd-input').focus()"
+              style="width:100%;background:#0e2040;border:1.5px solid rgba(0,212,255,0.15);
+                border-radius:8px;color:#e8f4ff;font-size:.88rem;
+                padding:12px 12px 12px 38px;outline:none;
+                font-family:'DM Sans',sans-serif;transition:border-color .2s;"
+              onfocus="this.style.borderColor='rgba(0,212,255,0.5)'"
+              onblur="this.style.borderColor='rgba(0,212,255,0.15)'">
+          </div>
+        </div>
+
+        <!-- Password field -->
+        <div style="margin-bottom:24px;">
+          <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+            color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
+            display:block;margin-bottom:8px;">Password</label>
+          <div style="position:relative;">
+            <span style="position:absolute;left:13px;top:50%;transform:translateY(-50%);
+              font-size:.95rem;color:#6a90b0;">🔑</span>
+            <input id="ap-pwd-input" type="password" placeholder="••••••••••••"
+              onkeydown="if(event.key==='Enter') doAdminLogin()"
+              style="width:100%;background:#0e2040;border:1.5px solid rgba(0,212,255,0.15);
+                border-radius:8px;color:#e8f4ff;font-size:.88rem;
+                padding:12px 42px 12px 38px;outline:none;
+                font-family:'DM Sans',sans-serif;transition:border-color .2s;"
+              onfocus="this.style.borderColor='rgba(0,212,255,0.5)'"
+              onblur="this.style.borderColor='rgba(0,212,255,0.15)'">
+            <button onclick="toggleApPwd()" id="ap-eye-btn"
+              style="position:absolute;right:12px;top:50%;transform:translateY(-50%);
+                background:none;border:none;cursor:pointer;font-size:.9rem;color:#6a90b0;">👁</button>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div id="ap-login-err" style="
+          display:none;background:rgba(220,50,50,0.1);
+          border:1px solid rgba(220,50,50,0.28);border-radius:6px;
+          padding:10px 14px;margin-bottom:16px;
+          color:#ff6b6b;font-size:.8rem;align-items:center;gap:8px;">
+          ⚠️ &nbsp;Invalid username or password. Please try again.
+        </div>
+
+        <!-- Login button -->
+        <button id="ap-login-btn" onclick="doAdminLogin()" style="
+          width:100%;background:#00d4ff;color:#06101e;
+          font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;
+          letter-spacing:.04em;border:none;border-radius:8px;
+          padding:14px;cursor:pointer;transition:all .2s;
+          display:flex;align-items:center;justify-content:center;gap:9px;
+          box-shadow:0 4px 20px rgba(0,212,255,0.25);"
+          onmouseover="this.style.background='#33ddff';this.style.boxShadow='0 6px 28px rgba(0,212,255,0.45)'"
+          onmouseout="this.style.background='#00d4ff';this.style.boxShadow='0 4px 20px rgba(0,212,255,0.25)'">
+          🔓 &nbsp;Sign In to Admin Portal
+        </button>
+
+        <!-- Back to site -->
+        <div style="text-align:center;margin-top:20px;">
+          <a onclick="closeAdminPortal()" href="#" style="
+            color:#6a90b0;font-size:.78rem;text-decoration:none;
+            display:inline-flex;align-items:center;gap:6px;
+            transition:color .2s;"
+            onmouseover="this.style.color='#00d4ff'"
+            onmouseout="this.style.color='#6a90b0'">
+            ← Back to website
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security note -->
+    <div style="margin-top:24px;text-align:center;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+        color:#2a4060;letter-spacing:.08em;">
+        🛡 &nbsp;SHA-256 Secured &nbsp;•&nbsp; Session expires on tab close
+      </span>
+    </div>
+  </div>
+
+  <!-- ── DASHBOARD SCREEN ── -->
+  <div id="ap-dashboard" style="display:none;min-height:100vh;padding:0;">
+
+    <!-- Dashboard top bar -->
+    <div style="background:#0b1a30;border-bottom:1px solid rgba(0,212,255,0.15);
+      padding:0 28px;height:64px;display:flex;align-items:center;
+      justify-content:space-between;position:sticky;top:0;z-index:10;
+      box-shadow:0 4px 20px rgba(0,0,0,0.4);">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:34px;height:34px;border-radius:50%;border:2px solid #00d4ff;
+          display:flex;align-items:center;justify-content:center;font-size:1rem;">💧</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;color:#e8f4ff;">Elevate Admin Portal</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.54rem;color:#00d4ff;letter-spacing:.1em;">VIDEO CONTENT MANAGER</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="display:flex;align-items:center;gap:8px;
+          background:rgba(0,212,255,0.07);border:1px solid rgba(0,212,255,0.15);
+          border-radius:6px;padding:6px 14px;">
+          <div style="width:7px;height:7px;border-radius:50%;background:#00e08a;
+            box-shadow:0 0 8px rgba(0,224,138,0.6);"></div>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#6a90b0;">Logged in as <span style="color:#00d4ff;" id="ap-user-display">admin</span></span>
+        </div>
+        <button onclick="doAdminLogout()" style="
+          background:rgba(255,80,80,0.08);color:#ff6b6b;
+          border:1px solid rgba(255,80,80,0.25);border-radius:6px;
+          padding:6px 16px;cursor:pointer;font-family:'Syne',sans-serif;
+          font-weight:700;font-size:.75rem;letter-spacing:.04em;transition:all .2s;"
+          onmouseover="this.style.background='rgba(255,80,80,0.18)'"
+          onmouseout="this.style.background='rgba(255,80,80,0.08)'">
+          Sign Out
+        </button>
+        <button onclick="closeAdminPortal()" style="
+          background:rgba(255,255,255,0.06);color:#6a90b0;
+          border:1px solid rgba(255,255,255,0.1);border-radius:6px;
+          padding:6px 16px;cursor:pointer;font-family:'Syne',sans-serif;
+          font-weight:700;font-size:.75rem;transition:all .2s;"
+          onmouseover="this.style.background='rgba(255,255,255,0.12)'"
+          onmouseout="this.style.background='rgba(255,255,255,0.06)'">
+          ← Back to Site
+        </button>
+      </div>
+    </div>
+
+    <!-- Dashboard content -->
+    <div style="max-width:860px;margin:0 auto;padding:48px 24px;">
+
+      <!-- Welcome banner -->
+      <div style="background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(0,119,170,0.05));
+        border:1px solid rgba(0,212,255,0.18);border-radius:12px;
+        padding:24px 28px;margin-bottom:36px;
+        display:flex;align-items:center;gap:18px;">
+        <div style="font-size:2.2rem;">👋</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;
+            color:#e8f4ff;margin-bottom:4px;">Welcome back, <span id="ap-welcome-name">Admin</span>!</div>
+          <div style="font-size:.82rem;color:#6a90b0;line-height:1.5;">
+            Manage your tutorial video from here. Paste any YouTube URL below — changes go live instantly for all visitors.
+          </div>
+        </div>
+      </div>
+
+      <!-- Current video card -->
+      <div style="margin-bottom:28px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;
+          color:#6a90b0;letter-spacing:.14em;text-transform:uppercase;
+          margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+          <span style="display:inline-block;width:20px;height:1.5px;background:#00d4ff;"></span>
+          Currently Live on Website
+        </div>
+        <div style="background:#0b1a30;border:1px solid rgba(0,212,255,0.15);
+          border-radius:10px;overflow:hidden;">
+          <div style="display:grid;grid-template-columns:280px 1fr;gap:0;">
+            <!-- Thumbnail -->
+            <div style="position:relative;background:#060f1c;aspect-ratio:16/9;
+              display:flex;align-items:center;justify-content:center;overflow:hidden;
+              border-right:1px solid rgba(0,212,255,0.1);">
+              <img id="ap-thumb" src="" alt="Current video thumbnail"
+                style="width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;display:flex;
+                align-items:center;justify-content:center;pointer-events:none;">
+                <div style="background:rgba(0,0,0,0.5);border-radius:50%;
+                  width:44px;height:44px;display:flex;align-items:center;justify-content:center;">
+                  <span style="color:#fff;font-size:1.1rem;padding-left:4px;">▶</span>
+                </div>
+              </div>
+            </div>
+            <!-- Info -->
+            <div style="padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:10px;">
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+                  color:#6a90b0;letter-spacing:.1em;margin-bottom:4px;">VIDEO ID</div>
+                <div id="ap-current-id" style="font-family:'JetBrains Mono',monospace;
+                  font-size:.85rem;color:#00d4ff;"></div>
+              </div>
+              <div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+                  color:#6a90b0;letter-spacing:.1em;margin-bottom:4px;">FULL URL</div>
+                <div id="ap-current-url" style="font-size:.78rem;color:#e8f4ff;
+                  word-break:break-all;line-height:1.5;"></div>
+              </div>
+              <a id="ap-yt-link" href="#" target="_blank" rel="noopener"
+                style="display:inline-flex;align-items:center;gap:6px;
+                  color:#00d4ff;font-size:.78rem;text-decoration:none;
+                  font-family:'JetBrains Mono',monospace;
+                  transition:opacity .2s;"
+                onmouseover="this.style.opacity='.7'"
+                onmouseout="this.style.opacity='1'">
+                ▶ Open on YouTube ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Update video card -->
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;
+          color:#6a90b0;letter-spacing:.14em;text-transform:uppercase;
+          margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+          <span style="display:inline-block;width:20px;height:1.5px;background:#00d4ff;"></span>
+          Update Tutorial Video
+        </div>
+        <div style="background:#0b1a30;border:1px solid rgba(0,212,255,0.15);
+          border-radius:10px;padding:28px;">
+
+          <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+            color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
+            display:block;margin-bottom:10px;">Paste YouTube URL or Video ID</label>
+
+          <div style="display:flex;gap:10px;margin-bottom:14px;">
+            <input id="ap-url-input" type="text"
+              placeholder="e.g. https://www.youtube.com/watch?v=fH6Dw1xJLoM"
+              onkeydown="if(event.key==='Enter') applyAdminVideo()"
+              style="flex:1;background:#0e2040;
+                border:1.5px solid rgba(0,212,255,0.18);border-radius:8px;
+                color:#e8f4ff;font-size:.85rem;padding:12px 16px;outline:none;
+                font-family:'DM Sans',sans-serif;transition:border-color .2s;"
+              onfocus="this.style.borderColor='rgba(0,212,255,0.55)'"
+              onblur="this.style.borderColor='rgba(0,212,255,0.18)'">
+            <button onclick="applyAdminVideo()" style="
+              background:#00d4ff;color:#06101e;border:none;border-radius:8px;
+              padding:12px 24px;cursor:pointer;font-family:'Syne',sans-serif;
+              font-weight:800;font-size:.85rem;letter-spacing:.03em;
+              white-space:nowrap;transition:all .2s;
+              box-shadow:0 4px 16px rgba(0,212,255,0.25);"
+              onmouseover="this.style.background='#33ddff';this.style.boxShadow='0 4px 24px rgba(0,212,255,0.45)'"
+              onmouseout="this.style.background='#00d4ff';this.style.boxShadow='0 4px 16px rgba(0,212,255,0.25)'">
+              ✅ Update Video
+            </button>
+          </div>
+
+          <!-- Format hints -->
+          <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
+            border-radius:6px;padding:14px 18px;margin-bottom:18px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+              color:#6a90b0;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">
+              ✓ &nbsp;Accepted URL Formats
+            </div>
+            <div style="display:grid;gap:5px;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;">youtube.com/watch?v=<span style="color:#e8f4ff;">VIDEO_ID</span></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;">youtu.be/<span style="color:#e8f4ff;">VIDEO_ID</span></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;">youtube.com/shorts/<span style="color:#e8f4ff;">VIDEO_ID</span></div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;"><span style="color:#e8f4ff;">VIDEO_ID</span> &nbsp;(11-character code only)</div>
+            </div>
+          </div>
+
+          <!-- Status message -->
+          <div id="ap-status" style="display:none;border-radius:8px;
+            padding:12px 16px;font-size:.83rem;font-weight:500;
+            display:none;align-items:center;gap:9px;margin-bottom:18px;"></div>
+
+          <!-- Reset -->
+          <div style="padding-top:18px;border-top:1px solid rgba(255,255,255,0.06);
+            display:flex;align-items:center;justify-content:space-between;">
+            <div style="font-size:.78rem;color:#6a90b0;">
+              Want to go back to the original video?
+            </div>
+            <button onclick="resetAdminVideo()" style="
+              background:transparent;color:#6a90b0;
+              border:1px solid rgba(255,255,255,0.12);border-radius:6px;
+              padding:8px 18px;cursor:pointer;font-family:'DM Sans',sans-serif;
+              font-size:.78rem;transition:all .2s;"
+              onmouseover="this.style.borderColor='rgba(0,212,255,0.3)';this.style.color='#00d4ff'"
+              onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='#6a90b0'">
+              ↺ &nbsp;Reset to Default Video
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="text-align:center;margin-top:48px;padding-top:24px;
+        border-top:1px solid rgba(255,255,255,0.06);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+          color:#2a4060;letter-spacing:.08em;">
+          🛡 &nbsp;Elevate Pool &amp; Spa Care — Admin Portal &nbsp;•&nbsp; Powered by VTEK Bizcorp &amp; Media Labs
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+  /* ════════════════════════════════════
+     ADMIN PORTAL LOGIC
+  ════════════════════════════════════ */
+  var AP_HASH     = "34caa18bf4b91c039285ed6fee4d80966dfbcdca61c1f7608eb5ad9612d696d2";
+  var AP_USERNAME = "admin";
+  var AP_SESSION  = "ep-ap-auth";
+  var AP_DEFAULT  = "fH6Dw1xJLoM";
+
+  /* ── SHA-256 ── */
+  async function sha256ap(msg){
+    var buf  = new TextEncoder().encode(msg);
+    var hash = await crypto.subtle.digest("SHA-256", buf);
+    return Array.from(new Uint8Array(hash)).map(function(b){ return b.toString(16).padStart(2,"0"); }).join("");
+  }
+
+  /* ── URL hash routing ── */
+  function checkAdminRoute(){
+    if(window.location.hash === "#admin-portal"){
+      openAdminPortal();
+    }
+  }
+  window.addEventListener("hashchange", checkAdminRoute);
+  window.addEventListener("load", checkAdminRoute);
+
+  function openAdminPortal(){
+    document.getElementById("admin-portal").style.display = "block";
+    document.body.style.overflow = "hidden";
+    if(sessionStorage.getItem(AP_SESSION) === "yes"){
+      showDashboard();
+    } else {
+      showApLogin();
+    }
+  }
+
+  function closeAdminPortal(){
+    document.getElementById("admin-portal").style.display = "none";
+    document.body.style.overflow = "";
+    history.replaceState(null, "", window.location.pathname);
+  }
+
+  function showApLogin(){
+    document.getElementById("ap-login").style.display     = "flex";
+    document.getElementById("ap-dashboard").style.display = "none";
+    document.getElementById("ap-login-err").style.display = "none";
+    document.getElementById("ap-pwd-input").value = "";
+    setTimeout(function(){ document.getElementById("ap-user-input").focus(); }, 100);
+  }
+
+  function showDashboard(){
+    document.getElementById("ap-login").style.display     = "none";
+    document.getElementById("ap-dashboard").style.display = "block";
+    refreshDashboard();
+  }
+
+  function refreshDashboard(){
+    var id  = localStorage.getItem("ep-video-id") || AP_DEFAULT;
+    var url = "https://www.youtube.com/watch?v=" + id;
+    var thumb = document.getElementById("ap-thumb");
+    var idEl  = document.getElementById("ap-current-id");
+    var urlEl = document.getElementById("ap-current-url");
+    var link  = document.getElementById("ap-yt-link");
+    if(thumb) thumb.src = "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
+    if(idEl)  idEl.textContent  = id;
+    if(urlEl) urlEl.textContent = url;
+    if(link)  link.href         = url;
+    var uname = sessionStorage.getItem("ep-ap-user") || "Admin";
+    var dn = document.getElementById("ap-user-display");
+    var wn = document.getElementById("ap-welcome-name");
+    if(dn) dn.textContent = uname;
+    if(wn) wn.textContent = uname.charAt(0).toUpperCase() + uname.slice(1);
+  }
+
+  function doAdminLogin(){
+    var userInput = document.getElementById("ap-user-input");
+    var pwdInput  = document.getElementById("ap-pwd-input");
+    var errDiv    = document.getElementById("ap-login-err");
+    var btn       = document.getElementById("ap-login-btn");
+    var user = userInput ? userInput.value.trim() : "";
+    var pwd  = pwdInput  ? pwdInput.value          : "";
+    if(!user || !pwd){ return; }
+    btn.textContent = "Verifying...";
+    btn.disabled    = true;
+    sha256ap(pwd).then(function(hash){
+      btn.innerHTML = "🔓 &nbsp;Sign In to Admin Portal";
+      btn.disabled  = false;
+      if(user.toLowerCase() === AP_USERNAME && hash === AP_HASH){
+        sessionStorage.setItem(AP_SESSION,   "yes");
+        sessionStorage.setItem("ep-ap-user", user);
+        showDashboard();
+      } else {
+        errDiv.style.display = "flex";
+        pwdInput.value = "";
+        pwdInput.style.animation = "none";
+        void pwdInput.offsetWidth;
+        pwdInput.style.animation = "shake .4s ease";
+        setTimeout(function(){ pwdInput.focus(); }, 50);
+      }
+    });
+  }
+
+  function doAdminLogout(){
+    sessionStorage.removeItem(AP_SESSION);
+    sessionStorage.removeItem("ep-ap-user");
+    showApLogin();
+  }
+
+  function toggleApPwd(){
+    var inp = document.getElementById("ap-pwd-input");
+    var btn = document.getElementById("ap-eye-btn");
+    if(inp.type === "password"){ inp.type = "text"; btn.textContent = "🙈"; }
+    else { inp.type = "password"; btn.textContent = "👁"; }
+  }
+
+  function extractYTId(input){
+    input = input.trim();
+    var m;
+    m = input.match(/youtu\.be\/([\w-]{11})/); if(m) return m[1];
+    m = input.match(/shorts\/([\w-]{11})/);     if(m) return m[1];
+    m = input.match(/[?&]v=([\w-]{11})/);        if(m) return m[1];
+    m = input.match(/embed\/([\w-]{11})/);       if(m) return m[1];
+    if(/^[\w-]{11}$/.test(input)) return input;
+    return null;
+  }
+
+  function setLiveVideo(id){
+    var iframe = document.getElementById("yt-embed");
+    if(iframe) iframe.src = "https://www.youtube.com/embed/" + id + "?rel=0&modestbranding=1";
+  }
+
+  function applyAdminVideo(){
+    var input  = document.getElementById("ap-url-input");
+    var status = document.getElementById("ap-status");
+    var val = input ? input.value : "";
+    var id  = extractYTId(val);
+    if(!id){
+      status.style.display    = "flex";
+      status.style.background = "rgba(220,50,50,0.1)";
+      status.style.border     = "1px solid rgba(220,50,50,0.28)";
+      status.style.color      = "#ff6b6b";
+      status.textContent      = "⚠️  Could not detect a valid YouTube video ID. Please check the URL.";
+      return;
+    }
+    localStorage.setItem("ep-video-id", id);
+    setLiveVideo(id);
+    if(input) input.value = "";
+    refreshDashboard();
+    status.style.display    = "flex";
+    status.style.background = "rgba(0,200,100,0.1)";
+    status.style.border     = "1px solid rgba(0,200,100,0.28)";
+    status.style.color      = "#00e08a";
+    status.textContent      = "✅  Video updated! The new video is now live on your website.";
+    setTimeout(function(){ status.style.display = "none"; }, 5000);
+  }
+
+  function resetAdminVideo(){
+    localStorage.removeItem("ep-video-id");
+    setLiveVideo(AP_DEFAULT);
+    refreshDashboard();
+    var status = document.getElementById("ap-status");
+    status.style.display    = "flex";
+    status.style.background = "rgba(0,212,255,0.08)";
+    status.style.border     = "1px solid rgba(0,212,255,0.2)";
+    status.style.color      = "#00d4ff";
+    status.textContent      = "↺  Reset to the default video.";
+    setTimeout(function(){ status.style.display = "none"; }, 4000);
+  }
+
+  /* Restore saved video on public page load */
+  (function(){
+    var savedId = localStorage.getItem("ep-video-id");
+    if(savedId) setLiveVideo(savedId);
+  })();
+
+</script>
 </body>
 </html>
