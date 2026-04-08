@@ -917,14 +917,31 @@
           <span class="badge">1K+ SUBSCRIBERS</span>
         </div>
       </div>
-      <!-- Iframe -->
-      <div style="position:relative;width:100%;padding-bottom:50%;background:#050d18;">
-        <iframe id="yt-embed" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+      <!-- Smart Video Container -->
+      <div id="video-container" style="position:relative;width:100%;padding-bottom:50%;background:#050d18;">
+        <!-- YouTube iframe (default) -->
+        <iframe id="yt-embed"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
           src="https://www.youtube.com/embed/fH6Dw1xJLoM?rel=0&modestbranding=1"
           title="Master Your Pool &amp; Spa — Tutorials by Ben"
           allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
           allowfullscreen loading="lazy">
         </iframe>
+        <!-- HTML5 video player (hidden by default, shown for URL/file) -->
+        <video id="html5-video"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;display:none;background:#000;"
+          controls controlsList="nodownload" preload="metadata">
+          Your browser does not support the video tag.
+        </video>
+        <!-- Video type badge -->
+        <div id="video-type-badge" style="
+          position:absolute;top:10px;left:10px;z-index:5;
+          display:none;
+          background:rgba(6,16,30,0.85);border:1px solid rgba(0,212,255,0.3);
+          border-radius:4px;padding:4px 10px;
+          font-family:'JetBrains Mono',monospace;font-size:.62rem;
+          color:#00d4ff;letter-spacing:.08em;backdrop-filter:blur(4px);">
+        </div>
       </div>
     </div>
 
@@ -1673,7 +1690,7 @@
         </div>
       </div>
 
-      <!-- Update video card -->
+      <!-- Update video card — Multi-source -->
       <div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;
           color:#6a90b0;letter-spacing:.14em;text-transform:uppercase;
@@ -1682,69 +1699,240 @@
           Update Tutorial Video
         </div>
         <div style="background:#0b1a30;border:1px solid rgba(0,212,255,0.15);
-          border-radius:10px;padding:28px;">
+          border-radius:10px;overflow:hidden;">
 
-          <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
-            color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
-            display:block;margin-bottom:10px;">Paste YouTube URL or Video ID</label>
-
-          <div style="display:flex;gap:10px;margin-bottom:14px;">
-            <input id="ap-url-input" type="text"
-              placeholder="e.g. https://www.youtube.com/watch?v=fH6Dw1xJLoM"
-              onkeydown="if(event.key==='Enter') applyAdminVideo()"
-              style="flex:1;background:#0e2040;
-                border:1.5px solid rgba(0,212,255,0.18);border-radius:8px;
-                color:#e8f4ff;font-size:.85rem;padding:12px 16px;outline:none;
-                font-family:'DM Sans',sans-serif;transition:border-color .2s;"
-              onfocus="this.style.borderColor='rgba(0,212,255,0.55)'"
-              onblur="this.style.borderColor='rgba(0,212,255,0.18)'">
-            <button onclick="applyAdminVideo()" style="
-              background:#00d4ff;color:#06101e;border:none;border-radius:8px;
-              padding:12px 24px;cursor:pointer;font-family:'Syne',sans-serif;
-              font-weight:800;font-size:.85rem;letter-spacing:.03em;
-              white-space:nowrap;transition:all .2s;
-              box-shadow:0 4px 16px rgba(0,212,255,0.25);"
-              onmouseover="this.style.background='#33ddff';this.style.boxShadow='0 4px 24px rgba(0,212,255,0.45)'"
-              onmouseout="this.style.background='#00d4ff';this.style.boxShadow='0 4px 16px rgba(0,212,255,0.25)'">
-              ✅ Update Video
+          <!-- ── Source Tabs ── -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;
+            border-bottom:1px solid rgba(0,212,255,0.12);">
+            <button id="tab-yt" onclick="switchTab('yt')" style="
+              padding:14px 10px;background:#142848;color:#00d4ff;
+              border:none;border-bottom:2px solid #00d4ff;
+              font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;
+              cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;">
+              ▶ YouTube
+            </button>
+            <button id="tab-url" onclick="switchTab('url')" style="
+              padding:14px 10px;background:transparent;color:#6a90b0;
+              border:none;border-bottom:2px solid transparent;
+              font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;
+              cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;">
+              🔗 Direct URL
+            </button>
+            <button id="tab-file" onclick="switchTab('file')" style="
+              padding:14px 10px;background:transparent;color:#6a90b0;
+              border:none;border-bottom:2px solid transparent;
+              font-family:'Syne',sans-serif;font-weight:700;font-size:.78rem;
+              cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;">
+              📁 Upload File
             </button>
           </div>
 
-          <!-- Format hints -->
-          <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
-            border-radius:6px;padding:14px 18px;margin-bottom:18px;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
-              color:#6a90b0;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">
-              ✓ &nbsp;Accepted URL Formats
+          <!-- ── Tab: YouTube ── -->
+          <div id="panel-yt" style="padding:24px 28px;">
+            <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+              color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
+              display:block;margin-bottom:10px;">Paste YouTube URL or Video ID</label>
+            <div style="display:flex;gap:10px;margin-bottom:14px;">
+              <input id="ap-url-input" type="text"
+                placeholder="https://www.youtube.com/watch?v=..."
+                onkeydown="if(event.key==='Enter') applyAdminVideo()"
+                style="flex:1;background:#0e2040;border:1.5px solid rgba(0,212,255,0.18);
+                  border-radius:8px;color:#e8f4ff;font-size:.85rem;
+                  padding:12px 16px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;"
+                onfocus="this.style.borderColor='rgba(0,212,255,0.55)'"
+                onblur="this.style.borderColor='rgba(0,212,255,0.18)'">
+              <button onclick="applyAdminVideo()" style="
+                background:#00d4ff;color:#06101e;border:none;border-radius:8px;
+                padding:12px 24px;cursor:pointer;font-family:'Syne',sans-serif;
+                font-weight:800;font-size:.85rem;white-space:nowrap;transition:all .2s;
+                box-shadow:0 4px 16px rgba(0,212,255,0.25);"
+                onmouseover="this.style.background='#33ddff'"
+                onmouseout="this.style.background='#00d4ff'">
+                ✅ Set Video
+              </button>
             </div>
-            <div style="display:grid;gap:5px;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;">youtube.com/watch?v=<span style="color:#e8f4ff;">VIDEO_ID</span></div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;">youtu.be/<span style="color:#e8f4ff;">VIDEO_ID</span></div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;">youtube.com/shorts/<span style="color:#e8f4ff;">VIDEO_ID</span></div>
-              <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:#00d4ff;"><span style="color:#e8f4ff;">VIDEO_ID</span> &nbsp;(11-character code only)</div>
+            <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
+              border-radius:6px;padding:12px 16px;font-family:'JetBrains Mono',monospace;
+              font-size:.68rem;color:#6a90b0;line-height:1.9;">
+              youtube.com/watch?v=<span style="color:#00d4ff;">ID</span> &nbsp;•&nbsp;
+              youtu.be/<span style="color:#00d4ff;">ID</span> &nbsp;•&nbsp;
+              youtube.com/shorts/<span style="color:#00d4ff;">ID</span> &nbsp;•&nbsp;
+              bare <span style="color:#00d4ff;">11-char ID</span>
             </div>
           </div>
 
-          <!-- Status message -->
-          <div id="ap-status" style="display:none;border-radius:8px;
-            padding:12px 16px;font-size:.83rem;font-weight:500;
-            display:none;align-items:center;gap:9px;margin-bottom:18px;"></div>
-
-          <!-- Reset -->
-          <div style="padding-top:18px;border-top:1px solid rgba(255,255,255,0.06);
-            display:flex;align-items:center;justify-content:space-between;">
-            <div style="font-size:.78rem;color:#6a90b0;">
-              Want to go back to the original video?
+          <!-- ── Tab: Direct URL ── -->
+          <div id="panel-url" style="padding:24px 28px;display:none;">
+            <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+              color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
+              display:block;margin-bottom:10px;">Paste Direct Video URL</label>
+            <div style="display:flex;gap:10px;margin-bottom:14px;">
+              <input id="ap-direct-url" type="text"
+                placeholder="https://example.com/video.mp4"
+                onkeydown="if(event.key==='Enter') applyDirectUrl()"
+                style="flex:1;background:#0e2040;border:1.5px solid rgba(0,212,255,0.18);
+                  border-radius:8px;color:#e8f4ff;font-size:.85rem;
+                  padding:12px 16px;outline:none;font-family:'DM Sans',sans-serif;transition:border-color .2s;"
+                onfocus="this.style.borderColor='rgba(0,212,255,0.55)'"
+                onblur="this.style.borderColor='rgba(0,212,255,0.18)'">
+              <button onclick="applyDirectUrl()" style="
+                background:#00d4ff;color:#06101e;border:none;border-radius:8px;
+                padding:12px 24px;cursor:pointer;font-family:'Syne',sans-serif;
+                font-weight:800;font-size:.85rem;white-space:nowrap;transition:all .2s;
+                box-shadow:0 4px 16px rgba(0,212,255,0.25);"
+                onmouseover="this.style.background='#33ddff'"
+                onmouseout="this.style.background='#00d4ff'">
+                ✅ Set Video
+              </button>
             </div>
-            <button onclick="resetAdminVideo()" style="
-              background:transparent;color:#6a90b0;
-              border:1px solid rgba(255,255,255,0.12);border-radius:6px;
-              padding:8px 18px;cursor:pointer;font-family:'DM Sans',sans-serif;
-              font-size:.78rem;transition:all .2s;"
-              onmouseover="this.style.borderColor='rgba(0,212,255,0.3)';this.style.color='#00d4ff'"
-              onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='#6a90b0'">
-              ↺ &nbsp;Reset to Default Video
-            </button>
+            <!-- Format info -->
+            <div style="background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.1);
+              border-radius:6px;padding:14px 16px;margin-bottom:0;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+                color:#6a90b0;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">
+                Supported Formats & Hosting Sources
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:#e8f4ff;">
+                  <span style="color:#00d4ff;">▸</span> MP4 (.mp4)
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:#e8f4ff;">
+                  <span style="color:#00d4ff;">▸</span> WebM (.webm)
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:#e8f4ff;">
+                  <span style="color:#00d4ff;">▸</span> OGG (.ogv)
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.78rem;color:#e8f4ff;">
+                  <span style="color:#00d4ff;">▸</span> MOV (.mov)
+                </div>
+              </div>
+              <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,212,255,0.1);">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;
+                  color:#6a90b0;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;">
+                  Works with hosted links from
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                  <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+                    border-radius:4px;padding:3px 10px;font-size:.72rem;color:#e8f4ff;">Google Drive</span>
+                  <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+                    border-radius:4px;padding:3px 10px;font-size:.72rem;color:#e8f4ff;">Dropbox</span>
+                  <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+                    border-radius:4px;padding:3px 10px;font-size:.72rem;color:#e8f4ff;">OneDrive</span>
+                  <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+                    border-radius:4px;padding:3px 10px;font-size:.72rem;color:#e8f4ff;">AWS S3</span>
+                  <span style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+                    border-radius:4px;padding:3px 10px;font-size:.72rem;color:#e8f4ff;">Any CDN</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Tab: Upload File ── -->
+          <div id="panel-file" style="padding:24px 28px;display:none;">
+            <label style="font-family:'JetBrains Mono',monospace;font-size:.62rem;
+              color:#6a90b0;letter-spacing:.12em;text-transform:uppercase;
+              display:block;margin-bottom:14px;">Upload Video File from Device</label>
+
+            <!-- Drop zone -->
+            <div id="ap-dropzone"
+              ondragover="event.preventDefault();this.style.borderColor='#00d4ff';this.style.background='rgba(0,212,255,0.08)'"
+              ondragleave="this.style.borderColor='rgba(0,212,255,0.2)';this.style.background='rgba(0,212,255,0.03)'"
+              ondrop="handleFileDrop(event)"
+              onclick="document.getElementById('ap-file-input').click()"
+              style="
+                border:2px dashed rgba(0,212,255,0.2);border-radius:10px;
+                background:rgba(0,212,255,0.03);padding:32px 20px;
+                text-align:center;cursor:pointer;transition:all .25s;
+                margin-bottom:14px;">
+              <div style="font-size:2.5rem;margin-bottom:10px;">📁</div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;
+                font-size:.9rem;color:#e8f4ff;margin-bottom:6px;">
+                Drag &amp; drop your video here
+              </div>
+              <div style="font-size:.78rem;color:#6a90b0;margin-bottom:14px;">
+                or click to browse files
+              </div>
+              <div style="display:inline-flex;align-items:center;gap:6px;
+                background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.2);
+                border-radius:4px;padding:4px 14px;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:#00d4ff;">
+                  MP4 &nbsp;•&nbsp; WebM &nbsp;•&nbsp; MOV &nbsp;•&nbsp; OGG &nbsp;•&nbsp; AVI
+                </span>
+              </div>
+            </div>
+
+            <input id="ap-file-input" type="file"
+              accept="video/mp4,video/webm,video/ogg,video/quicktime,video/x-msvideo,.mp4,.webm,.ogv,.mov,.avi"
+              onchange="handleFileSelect(this)"
+              style="display:none;">
+
+            <!-- File info row (hidden until file selected) -->
+            <div id="ap-file-info" style="display:none;
+              background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.15);
+              border-radius:8px;padding:14px 18px;margin-bottom:14px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <span style="font-size:1.5rem;">🎬</span>
+                  <div>
+                    <div id="ap-file-name" style="font-family:'Syne',sans-serif;
+                      font-weight:700;font-size:.85rem;color:#e8f4ff;margin-bottom:2px;"></div>
+                    <div id="ap-file-size" style="font-family:'JetBrains Mono',monospace;
+                      font-size:.65rem;color:#6a90b0;"></div>
+                  </div>
+                </div>
+                <button onclick="applyFileVideo()" style="
+                  background:#00d4ff;color:#06101e;border:none;border-radius:6px;
+                  padding:10px 20px;cursor:pointer;font-family:'Syne',sans-serif;
+                  font-weight:800;font-size:.82rem;white-space:nowrap;transition:all .2s;"
+                  onmouseover="this.style.background='#33ddff'"
+                  onmouseout="this.style.background='#00d4ff'">
+                  ✅ Use This Video
+                </button>
+              </div>
+              <!-- Progress bar -->
+              <div id="ap-progress-wrap" style="display:none;margin-top:12px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#6a90b0;">Saving to browser storage...</span>
+                  <span id="ap-progress-pct" style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:#00d4ff;">0%</span>
+                </div>
+                <div style="background:rgba(0,212,255,0.1);border-radius:4px;height:6px;overflow:hidden;">
+                  <div id="ap-progress-bar" style="height:100%;width:0%;
+                    background:linear-gradient(90deg,#0077aa,#00d4ff);
+                    border-radius:4px;transition:width .2s;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Storage warning -->
+            <div style="background:rgba(245,200,66,0.07);border:1px solid rgba(245,200,66,0.2);
+              border-radius:6px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;">
+              <span style="font-size:1rem;flex-shrink:0;">⚠️</span>
+              <div style="font-size:.75rem;color:#a08a30;line-height:1.6;">
+                <strong style="color:#f5c842;">Browser storage note:</strong>
+                Uploaded videos are saved in your browser's IndexedDB (local to this device &amp; browser).
+                For videos shared across devices, use the <strong style="color:#f5c842;">Direct URL</strong> tab instead with a hosted link.
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Status + Reset (shared) ── -->
+          <div style="padding:0 28px 24px;">
+            <div id="ap-status" style="display:none;border-radius:8px;
+              padding:12px 16px;font-size:.83rem;font-weight:500;
+              align-items:center;gap:9px;margin-bottom:14px;"></div>
+            <div style="padding-top:18px;border-top:1px solid rgba(255,255,255,0.06);
+              display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+              <div style="font-size:.78rem;color:#6a90b0;">Reset to original YouTube tutorial video</div>
+              <button onclick="resetAdminVideo()" style="
+                background:transparent;color:#6a90b0;
+                border:1px solid rgba(255,255,255,0.12);border-radius:6px;
+                padding:8px 18px;cursor:pointer;font-family:'DM Sans',sans-serif;
+                font-size:.78rem;transition:all .2s;"
+                onmouseover="this.style.borderColor='rgba(0,212,255,0.3)';this.style.color='#00d4ff'"
+                onmouseout="this.style.borderColor='rgba(255,255,255,0.12)';this.style.color='#6a90b0'">
+                ↺ &nbsp;Reset to Default
+              </button>
+            </div>
           </div>
 
         </div>
@@ -1769,6 +1957,197 @@
   /* ════════════════════════════════════
      ADMIN PORTAL LOGIC
   ════════════════════════════════════ */
+
+  /* ── Tab switcher ── */
+  function switchTab(tab){
+    var tabs   = ["yt","url","file"];
+    var labels = { yt:"▶ YouTube", url:"🔗 Direct URL", file:"📁 Upload File" };
+    tabs.forEach(function(t){
+      var btn   = document.getElementById("tab-"+t);
+      var panel = document.getElementById("panel-"+t);
+      var active = (t === tab);
+      if(btn){
+        btn.style.background   = active ? "#142848" : "transparent";
+        btn.style.color        = active ? "#00d4ff" : "#6a90b0";
+        btn.style.borderBottom = active ? "2px solid #00d4ff" : "2px solid transparent";
+      }
+      if(panel) panel.style.display = active ? "block" : "none";
+    });
+  }
+
+  /* ── Direct URL apply ── */
+  function applyDirectUrl(){
+    var input  = document.getElementById("ap-direct-url");
+    var status = document.getElementById("ap-status");
+    var url    = input ? input.value.trim() : "";
+    if(!url){
+      showStatus("⚠️  Please paste a video URL first.", "error"); return;
+    }
+    // Basic URL check
+    if(!url.startsWith("http")){
+      showStatus("⚠️  URL must start with http:// or https://", "error"); return;
+    }
+    localStorage.setItem("ep-video-type", "url");
+    localStorage.setItem("ep-video-url",  url);
+    localStorage.removeItem("ep-video-id");
+    switchToHtml5(url, "DIRECT URL");
+    if(input) input.value = "";
+    refreshDashboard();
+    showStatus("✅  Direct video URL set and live on your website.", "success");
+  }
+
+  /* ── File select / drop ── */
+  var pendingFile = null;
+
+  function handleFileSelect(input){
+    if(input.files && input.files[0]) loadFilePreview(input.files[0]);
+  }
+
+  function handleFileDrop(e){
+    e.preventDefault();
+    var dz = document.getElementById("ap-dropzone");
+    dz.style.borderColor = "rgba(0,212,255,0.2)";
+    dz.style.background  = "rgba(0,212,255,0.03)";
+    var file = e.dataTransfer.files[0];
+    if(file && file.type.startsWith("video/")) loadFilePreview(file);
+    else showStatus("⚠️  Please drop a valid video file.", "error");
+  }
+
+  function loadFilePreview(file){
+    pendingFile = file;
+    var info    = document.getElementById("ap-file-info");
+    var nameEl  = document.getElementById("ap-file-name");
+    var sizeEl  = document.getElementById("ap-file-size");
+    info.style.display = "block";
+    nameEl.textContent = file.name;
+    var mb = (file.size / (1024*1024)).toFixed(2);
+    sizeEl.textContent = mb + " MB  •  " + file.type;
+  }
+
+  function applyFileVideo(){
+    if(!pendingFile){ showStatus("⚠️  No file selected.", "error"); return; }
+    var wrap  = document.getElementById("ap-progress-wrap");
+    var bar   = document.getElementById("ap-progress-bar");
+    var pct   = document.getElementById("ap-progress-pct");
+    wrap.style.display = "block";
+    bar.style.width    = "0%";
+    pct.textContent    = "0%";
+
+    var reader = new FileReader();
+    reader.onprogress = function(e){
+      if(e.lengthComputable){
+        var p = Math.round((e.loaded / e.total) * 85);
+        bar.style.width  = p + "%";
+        pct.textContent  = p + "%";
+      }
+    };
+    reader.onload = function(e){
+      bar.style.width = "95%"; pct.textContent = "95%";
+      /* Store in IndexedDB */
+      saveVideoToIDB(e.target.result, pendingFile.name, function(ok){
+        bar.style.width = "100%"; pct.textContent = "100%";
+        setTimeout(function(){ wrap.style.display = "none"; }, 800);
+        if(ok){
+          localStorage.setItem("ep-video-type", "idb");
+          localStorage.setItem("ep-video-name", pendingFile.name);
+          localStorage.removeItem("ep-video-id");
+          localStorage.removeItem("ep-video-url");
+          switchToHtml5(e.target.result, "LOCAL FILE");
+          refreshDashboard();
+          showStatus("✅  Video saved to browser storage and now live!", "success");
+          pendingFile = null;
+        } else {
+          showStatus("❌  Storage failed — file may be too large. Try the Direct URL tab instead.", "error");
+        }
+      });
+    };
+    reader.onerror = function(){ showStatus("❌  Could not read file.", "error"); };
+    reader.readAsDataURL(pendingFile);
+  }
+
+  /* ── IndexedDB helpers ── */
+  var IDB_NAME  = "elevate-video-db";
+  var IDB_STORE = "videos";
+  var IDB_KEY   = "current-video";
+
+  function openIDB(callback){
+    var req = indexedDB.open(IDB_NAME, 1);
+    req.onupgradeneeded = function(e){ e.target.result.createObjectStore(IDB_STORE); };
+    req.onsuccess = function(e){ callback(null, e.target.result); };
+    req.onerror   = function(e){ callback(e, null); };
+  }
+
+  function saveVideoToIDB(dataUrl, name, callback){
+    openIDB(function(err, db){
+      if(err){ callback(false); return; }
+      var tx    = db.transaction(IDB_STORE, "readwrite");
+      var store = tx.objectStore(IDB_STORE);
+      var req   = store.put({ data: dataUrl, name: name }, IDB_KEY);
+      req.onsuccess = function(){ callback(true); };
+      req.onerror   = function(){ callback(false); };
+    });
+  }
+
+  function loadVideoFromIDB(callback){
+    openIDB(function(err, db){
+      if(err){ callback(null); return; }
+      var tx    = db.transaction(IDB_STORE, "readonly");
+      var store = tx.objectStore(IDB_STORE);
+      var req   = store.get(IDB_KEY);
+      req.onsuccess = function(e){ callback(e.target.result || null); };
+      req.onerror   = function(){  callback(null); };
+    });
+  }
+
+  /* ── Switch between iframe and HTML5 video ── */
+  function switchToYouTube(id){
+    var iframe = document.getElementById("yt-embed");
+    var video  = document.getElementById("html5-video");
+    var badge  = document.getElementById("video-type-badge");
+    if(video){ video.pause(); video.src = ""; video.style.display = "none"; }
+    if(iframe){
+      iframe.src = "https://www.youtube.com/embed/" + id + "?rel=0&modestbranding=1";
+      iframe.style.display = "block";
+    }
+    if(badge) badge.style.display = "none";
+  }
+
+  function switchToHtml5(src, label){
+    var iframe = document.getElementById("yt-embed");
+    var video  = document.getElementById("html5-video");
+    var badge  = document.getElementById("video-type-badge");
+    if(iframe){ iframe.style.display = "none"; iframe.src = "about:blank"; }
+    if(video){
+      video.src          = src;
+      video.style.display = "block";
+    }
+    if(badge){
+      badge.style.display  = "block";
+      badge.textContent    = "▶ " + label;
+    }
+  }
+
+  /* ── Status helper ── */
+  function showStatus(msg, type){
+    var el = document.getElementById("ap-status");
+    if(!el) return;
+    el.style.display = "flex";
+    if(type === "success"){
+      el.style.background = "rgba(0,200,100,0.1)";
+      el.style.border     = "1px solid rgba(0,200,100,0.28)";
+      el.style.color      = "#00e08a";
+    } else if(type === "error"){
+      el.style.background = "rgba(220,50,50,0.1)";
+      el.style.border     = "1px solid rgba(220,50,50,0.28)";
+      el.style.color      = "#ff6b6b";
+    } else {
+      el.style.background = "rgba(0,212,255,0.08)";
+      el.style.border     = "1px solid rgba(0,212,255,0.2)";
+      el.style.color      = "#00d4ff";
+    }
+    el.textContent = msg;
+    setTimeout(function(){ el.style.display = "none"; }, 5000);
+  }
   var AP_HASH     = "34caa18bf4b91c039285ed6fee4d80966dfbcdca61c1f7608eb5ad9612d696d2";
   var AP_USERNAME = "admin";
   var AP_SESSION  = "ep-ap-auth";
@@ -1821,16 +2200,33 @@
   }
 
   function refreshDashboard(){
-    var id  = localStorage.getItem("ep-video-id") || AP_DEFAULT;
-    var url = "https://www.youtube.com/watch?v=" + id;
+    var vtype = localStorage.getItem("ep-video-type") || "youtube";
+    var vid   = localStorage.getItem("ep-video-id")   || AP_DEFAULT;
+    var vurl  = localStorage.getItem("ep-video-url")  || "";
+    var vname = localStorage.getItem("ep-video-name") || "";
     var thumb = document.getElementById("ap-thumb");
     var idEl  = document.getElementById("ap-current-id");
     var urlEl = document.getElementById("ap-current-url");
     var link  = document.getElementById("ap-yt-link");
-    if(thumb) thumb.src = "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
-    if(idEl)  idEl.textContent  = id;
-    if(urlEl) urlEl.textContent = url;
-    if(link)  link.href         = url;
+
+    if(vtype === "youtube"){
+      var ytUrl = "https://www.youtube.com/watch?v=" + vid;
+      if(thumb){ thumb.src = "https://img.youtube.com/vi/" + vid + "/hqdefault.jpg"; thumb.style.display = "block"; }
+      if(idEl)  idEl.textContent  = "▶ YouTube — ID: " + vid;
+      if(urlEl) urlEl.textContent = ytUrl;
+      if(link){ link.href = ytUrl; link.style.display = "inline-flex"; }
+    } else if(vtype === "url"){
+      if(thumb){ thumb.src = ""; thumb.style.display = "none"; }
+      if(idEl)  idEl.textContent  = "🔗 Direct URL";
+      if(urlEl) urlEl.textContent = vurl;
+      if(link){ link.href = vurl; link.style.display = "inline-flex"; link.textContent = "▶ Open Video URL ↗"; }
+    } else if(vtype === "idb"){
+      if(thumb){ thumb.src = ""; thumb.style.display = "none"; }
+      if(idEl)  idEl.textContent  = "📁 Local File — " + vname;
+      if(urlEl) urlEl.textContent = "Stored in browser IndexedDB (this device only)";
+      if(link)  link.style.display = "none";
+    }
+
     var uname = sessionStorage.getItem("ep-ap-user") || "Admin";
     var dn = document.getElementById("ap-user-display");
     var wn = document.getElementById("ap-welcome-name");
@@ -1891,52 +2287,47 @@
   }
 
   function setLiveVideo(id){
-    var iframe = document.getElementById("yt-embed");
-    if(iframe) iframe.src = "https://www.youtube.com/embed/" + id + "?rel=0&modestbranding=1";
+    switchToYouTube(id);
   }
 
   function applyAdminVideo(){
-    var input  = document.getElementById("ap-url-input");
-    var status = document.getElementById("ap-status");
-    var val = input ? input.value : "";
-    var id  = extractYTId(val);
-    if(!id){
-      status.style.display    = "flex";
-      status.style.background = "rgba(220,50,50,0.1)";
-      status.style.border     = "1px solid rgba(220,50,50,0.28)";
-      status.style.color      = "#ff6b6b";
-      status.textContent      = "⚠️  Could not detect a valid YouTube video ID. Please check the URL.";
-      return;
-    }
-    localStorage.setItem("ep-video-id", id);
-    setLiveVideo(id);
+    var input = document.getElementById("ap-url-input");
+    var val   = input ? input.value : "";
+    var id    = extractYTId(val);
+    if(!id){ showStatus("⚠️  Could not detect a valid YouTube video ID. Please check the URL.", "error"); return; }
+    localStorage.setItem("ep-video-type", "youtube");
+    localStorage.setItem("ep-video-id",   id);
+    localStorage.removeItem("ep-video-url");
+    switchToYouTube(id);
     if(input) input.value = "";
     refreshDashboard();
-    status.style.display    = "flex";
-    status.style.background = "rgba(0,200,100,0.1)";
-    status.style.border     = "1px solid rgba(0,200,100,0.28)";
-    status.style.color      = "#00e08a";
-    status.textContent      = "✅  Video updated! The new video is now live on your website.";
-    setTimeout(function(){ status.style.display = "none"; }, 5000);
+    showStatus("✅  YouTube video updated and live on your website.", "success");
   }
 
   function resetAdminVideo(){
+    localStorage.removeItem("ep-video-type");
     localStorage.removeItem("ep-video-id");
-    setLiveVideo(AP_DEFAULT);
+    localStorage.removeItem("ep-video-url");
+    localStorage.removeItem("ep-video-name");
+    switchToYouTube(AP_DEFAULT);
     refreshDashboard();
-    var status = document.getElementById("ap-status");
-    status.style.display    = "flex";
-    status.style.background = "rgba(0,212,255,0.08)";
-    status.style.border     = "1px solid rgba(0,212,255,0.2)";
-    status.style.color      = "#00d4ff";
-    status.textContent      = "↺  Reset to the default video.";
-    setTimeout(function(){ status.style.display = "none"; }, 4000);
+    showStatus("↺  Reset to the default YouTube video.", "info");
   }
 
-  /* Restore saved video on public page load */
+  /* ── Restore saved video on public page load ── */
   (function(){
-    var savedId = localStorage.getItem("ep-video-id");
-    if(savedId) setLiveVideo(savedId);
+    var vtype = localStorage.getItem("ep-video-type");
+    var vid   = localStorage.getItem("ep-video-id");
+    var vurl  = localStorage.getItem("ep-video-url");
+    if(vtype === "youtube" && vid){
+      switchToYouTube(vid);
+    } else if(vtype === "url" && vurl){
+      switchToHtml5(vurl, "DIRECT URL");
+    } else if(vtype === "idb"){
+      loadVideoFromIDB(function(result){
+        if(result && result.data) switchToHtml5(result.data, "LOCAL FILE");
+      });
+    }
   })();
 
 </script>
