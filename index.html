@@ -418,25 +418,50 @@
       padding:0 !important;
       gap:0 !important;
     }
-    /* Product image area */
+    /* Product image area — mirror desktop: rings + animated circle + sticky labels */
     .hero-right {
-      background:#fff;
-      padding:20px 16px 0;
+      background:#fff !important;
+      padding:28px 16px 20px !important;
       justify-content:center !important;
-      border-bottom:1px solid #ddd;
+      align-items:center !important;
+      border-bottom:1px solid #ddd !important;
+      min-height:320px !important;
+      position:relative !important;
+      overflow:visible !important;
     }
-    .float { animation:none !important; }
-    .hero-right > div {
-      width:260px !important; height:260px !important;
-      border:none !important;
-      box-shadow:none !important;
-      background:transparent !important;
+    /* Outer spinning ring (nth-child 1) — scale proportionally from 420px */
+    .hero-right > div:nth-child(1) {
+      width:290px !important; height:290px !important;
     }
-    .hero-right > div > div:nth-child(1),
-    .hero-right > div > div:nth-child(2) { display:none; }
-    /* Float tags hidden on mobile */
-    .hero-right > div > div:last-child,
-    .hero-right > div > div:nth-last-child(2) { display:none !important; }
+    /* Inner spinning ring (nth-child 2) — scale proportionally from 360px */
+    .hero-right > div:nth-child(2) {
+      width:248px !important; height:248px !important;
+    }
+    /* Product circle with the float animation — scale from 370px.
+       IMPORTANT: do NOT override animation or position — .float keyframes must run. */
+    .hero-right > div:nth-child(3) {
+      width:230px !important; height:230px !important;
+    }
+    /* Floating label tags — smaller type, tighter offsets so they don't clip */
+    .hero-right > div:nth-child(3) > div {
+      font-size:.58rem !important;
+      padding:5px 9px !important;
+      white-space:nowrap !important;
+    }
+    /* "18V Brushless Motor" label (top-right, nth-last-child 2) */
+    .hero-right > div:nth-child(3) > div:nth-last-child(2) {
+      top:-4px !important;
+      right:-10px !important;
+      bottom:auto !important;
+      left:auto !important;
+    }
+    /* "Telescoping Pole Included" label (bottom-left, last-child) */
+    .hero-right > div:nth-child(3) > div:last-child {
+      bottom:12px !important;
+      left:-14px !important;
+      top:auto !important;
+      right:auto !important;
+    }
 
     /* Hero text block → Amazon product detail */
     .hero-grid > div:first-child {
@@ -454,17 +479,25 @@
     }
     .hero-grid .sec-label::before { display:none; }
 
-    /* Product title */
+    /* Product title — keep the desktop display style (Syne bold + cyan glow), just scaled for mobile */
     .hero-grid h1 {
-      font-size:1.35rem !important;
-      font-weight:400 !important;
-      color:#0f1111 !important;
-      text-shadow:none !important;
-      margin-bottom:6px !important;
-      font-family:'DM Sans',sans-serif !important;
-      line-height:1.3 !important;
+      font-size:clamp(1.7rem, 7.5vw, 2.3rem) !important;
+      font-weight:800 !important;
+      font-family:'Syne',sans-serif !important;
+      line-height:1.15 !important;
+      margin-bottom:14px !important;
+      overflow-wrap:anywhere !important;
+      word-break:normal !important;
+      max-width:100% !important;
+      /* Let inherited/default color apply; dark mode → white, light mode → navy */
     }
-    .hero-grid h1 span { color:#0f1111 !important; text-shadow:none !important; }
+    .hero-grid h1 span[data-i18n="hero_h1_line2"] {
+      color:var(--cyan) !important;
+      text-shadow:0 0 40px rgba(0,212,255,0.55) !important;
+    }
+    html.light-mode .hero-grid h1 span[data-i18n="hero_h1_line2"] {
+      text-shadow:0 0 30px rgba(0,119,170,0.3) !important;
+    }
 
     /* Rating stars row */
     .hero-grid .fade-up.d4 {
@@ -528,6 +561,14 @@
     }
     .trust-bar > div { color:#ccc !important; font-size:.75rem !important; }
     .trust-bar > div[style*="width:1px"] { background:rgba(255,255,255,0.15) !important; height:16px !important; }
+
+    /* Light mode on mobile: the trust bar background becomes light (from desktop light-mode rule),
+       so text must darken to stay readable */
+    html.light-mode section[style*="background:var(--navy-mid)"] {
+      background:#e2eaf2 !important;
+    }
+    html.light-mode .trust-bar > div { color:#0d1f33 !important; }
+    html.light-mode .trust-bar > div[style*="width:1px"] { background:rgba(13,31,51,0.2) !important; }
 
     /* ── Tutorials section ── */
     section#tutorials {
@@ -711,8 +752,8 @@
     }
     .pharma > div:last-child > div:first-child { color:#f90 !important; }
 
-    /* Scan line off on mobile */
-    .scan { display:none !important; }
+    /* Scan line: keep it on mobile too — same vertical sweep as desktop */
+    .scan { display:block !important; }
 
     /* Section dividers */
     .div-cyan { background:#ddd !important; opacity:1 !important; }
@@ -904,7 +945,7 @@
     </div>
 
     <!-- RIGHT — real product photo -->
-    <div class="hero-right" style="display:flex;justify-content:center;align-items:center;position:relative;" class="fade-up d2">
+    <div class="hero-right fade-up d2" style="display:flex;justify-content:center;align-items:center;position:relative;">
       <!-- Outer glow ring -->
       <div style="position:absolute;width:420px;height:420px;border-radius:50%;
                   border:1px dashed rgba(0,212,255,0.12);animation:spin 28s linear infinite;"></div>
