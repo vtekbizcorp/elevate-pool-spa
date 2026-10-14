@@ -1,0 +1,66 @@
+{%- liquid
+  assign c = section.settings.collection
+  if c == blank
+    assign c = collections.all
+  endif
+-%}
+<section class="ev ev-sec {% if section.settings.grid_bg %}ev-grid-bg{% endif %}" style="{% if section.settings.alt_bg %}background:var(--ev-navy-mid);{% endif %}">
+  <div class="ev-wrap">
+    <div class="ev-sec__head">
+      <div class="ev-label ev-label--center">{{ section.settings.eyebrow | escape }}</div>
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+    <div class="ev-cards">
+      {%- for product in c.products limit: section.settings.limit -%}
+        {%- assign v = product.selected_or_first_available_variant -%}
+        <div class="ev-card">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="ev-badge ev-badge--gold ev-card__sale">Save {{ product.compare_at_price | minus: product.price | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+          <a class="ev-card__img" href="{{ product.url }}">
+            {%- if product.featured_image != blank -%}
+              {{ product.featured_image | image_url: width: 500 | image_tag: alt: product.title, loading: 'lazy', sizes: '260px' }}
+            {%- else -%}
+              <span class="ev-card__ph">💧</span>
+            {%- endif -%}
+          </a>
+          <div class="ev-card__body">
+            <div class="ev-card__vendor">{{ product.type | default: product.vendor | escape }}</div>
+            <div class="ev-card__title"><a href="{{ product.url }}">{{ product.title | escape }}</a></div>
+            <div class="ev-card__price">
+              <span class="ev-price">{{ product.price | money }}</span>
+              {%- if product.compare_at_price > product.price -%}<span class="ev-price-old">{{ product.compare_at_price | money }}</span>{%- endif -%}
+            </div>
+            {%- form 'product', product -%}
+              <input type="hidden" name="id" value="{{ v.id }}">
+              <button type="submit" class="ev-btn ev-btn--cyan ev-btn--block" {% unless v.available %}disabled{% endunless %}>
+                {%- if v.available -%}🛒 Add to cart{%- else -%}Sold out{%- endif -%}
+              </button>
+            {%- endform -%}
+          </div>
+        </div>
+      {%- else -%}
+        <p class="ev-muted" style="text-align:center;grid-column:1/-1;">Products coming soon.</p>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+<div class="ev-div"></div>
+
+{% schema %}
+{
+  "name": "Elevate product grid",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Spa essentials" },
+    { "type": "text", "id": "text", "label": "Text" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 2, "max": 12, "step": 1, "default": 8 },
+    { "type": "checkbox", "id": "grid_bg", "label": "Grid background", "default": false },
+    { "type": "checkbox", "id": "alt_bg", "label": "Lighter navy background", "default": false }
+  ],
+  "presets": [ { "name": "Elevate product grid" } ]
+}
+{% endschema %}

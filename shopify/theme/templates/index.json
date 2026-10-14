@@ -1,0 +1,174 @@
+{
+  "sections": {
+    "hero": {
+      "type": "elevate-hero",
+      "settings": {
+        "eyebrow": "Featured: PJV24 series",
+        "heading_1": "Cordless Power.",
+        "heading_2": "Crystal Results.",
+        "text": "<p>The <strong>PJV24 Rechargeable Spa & Pool Vacuum</strong> picks up sand, grit and debris with no hoses and no filter hookup. Built for weekly upkeep and deep cleans.</p>",
+        "product": "pjv24-rechargeable-spa-vacuum",
+        "button_label": "Buy now",
+        "button_2_label": "Shop all",
+        "button_2_link": "shopify://collections/all",
+        "tag_1": "Cordless & rechargeable",
+        "tag_2": "No hoses needed"
+      },
+      "blocks": {
+        "b1": {
+          "type": "badge",
+          "settings": {
+            "text": "Rechargeable"
+          }
+        },
+        "b2": {
+          "type": "badge",
+          "settings": {
+            "text": "Spas & small pools"
+          }
+        },
+        "b3": {
+          "type": "badge",
+          "settings": {
+            "text": "Picked by spa pros"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ]
+    },
+    "trust": {
+      "type": "elevate-trust-bar",
+      "blocks": {
+        "t1": {
+          "type": "item",
+          "settings": {
+            "icon": "\ud83d\udee0\ufe0f",
+            "text": "Picked by the Elevate Landscape & Spas team"
+          }
+        },
+        "t2": {
+          "type": "item",
+          "settings": {
+            "icon": "\u25b6",
+            "text": "How-to videos for every product"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "\ud83d\ude9a",
+            "text": "Ships across the lower 48"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "\ud83d\udd04",
+            "text": "30-day returns on unopened items"
+          }
+        },
+        "t5": {
+          "type": "item",
+          "settings": {
+            "icon": "\ud83d\udd12",
+            "text": "Secure checkout"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ]
+    },
+    "testing": {
+      "type": "elevate-products",
+      "settings": {
+        "eyebrow": "The chemical lab",
+        "heading": "Test, balance, relax.",
+        "text": "Strips and treatments to keep your water clear and comfortable.",
+        "collection": "water-testing",
+        "limit": 4,
+        "grid_bg": true
+      }
+    },
+    "parts": {
+      "type": "elevate-products",
+      "settings": {
+        "eyebrow": "Technical parts department",
+        "heading": "OEM & direct-fit parts.",
+        "text": "Replacement heaters and pumps for the spas we work on every week.",
+        "collection": "spa-parts",
+        "limit": 4,
+        "alt_bg": true
+      }
+    },
+    "cleaning": {
+      "type": "elevate-products",
+      "settings": {
+        "eyebrow": "Cleaning & care",
+        "heading": "Keep it spotless.",
+        "text": "Vacuums, wipes and line purges for a cleaner spa.",
+        "collection": "cleaning-care",
+        "limit": 8
+      }
+    },
+    "bundle": {
+      "type": "elevate-bundle",
+      "settings": {
+        "eyebrow": "Exclusive value bundle",
+        "heading": "The DIY Spa BioClean Kit.",
+        "text": "Everything you need for a deep clean and biofilm purge, in one box.",
+        "product": "diy-spa-bioclean-kit",
+        "button_label": "Get the BioClean Kit",
+        "small_print": "Ships across the lower 48 \u00b7 30-day returns on unopened items"
+      },
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "text": "PJV24 rechargeable vacuum"
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "text": "Spa circulation pump"
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "text": "Spa line purge solution (6 oz)"
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "text": "Surface wipes (50 pack)"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4"
+      ]
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "testing",
+    "parts",
+    "cleaning",
+    "bundle"
+  ]
+}

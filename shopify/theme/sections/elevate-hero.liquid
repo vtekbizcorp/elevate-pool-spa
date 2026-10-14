@@ -1,0 +1,73 @@
+{%- liquid
+  assign p = section.settings.product
+  if p != blank
+    assign v = p.selected_or_first_available_variant
+  endif
+-%}
+<section class="ev ev-grid-bg ev-hero" id="ev-hero-{{ section.id }}">
+  <div class="ev-wrap ev-hero__grid">
+    <div>
+      <div class="ev-label ev-fade">{{ section.settings.eyebrow | escape }}</div>
+      <h1 class="ev-fade ev-d1">
+        {{ section.settings.heading_1 | escape }}<br>
+        <span class="ev-cyan ev-text-glow">{{ section.settings.heading_2 | escape }}</span>
+      </h1>
+      {%- if section.settings.text != blank -%}
+        <div class="ev-hero__text ev-fade ev-d2">{{ section.settings.text }}</div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="ev-hero__badges ev-fade ev-d2">
+          {%- for block in section.blocks -%}
+            <span class="ev-badge" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      <div class="ev-hero__ctas ev-fade ev-d3">
+        {%- if p != blank -%}
+          <a href="{{ p.url }}" class="ev-btn ev-btn--cyan">🛒 {{ section.settings.button_label | escape }} · {{ v.price | money_without_trailing_zeros }}</a>
+        {%- endif -%}
+        {%- if section.settings.button_2_label != blank -%}
+          <a href="{{ section.settings.button_2_link | default: routes.all_products_collection_url }}" class="ev-btn ev-btn--outline">{{ section.settings.button_2_label | escape }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+    <div class="ev-hero__art ev-fade ev-d2">
+      <div class="ev-ring ev-ring--1"></div>
+      <div class="ev-ring ev-ring--2"></div>
+      <div class="ev-hero__circle ev-float ev-glow">
+        {%- if p.featured_image != blank -%}
+          {{ p.featured_image | image_url: width: 800 | image_tag: alt: p.title, loading: 'eager', sizes: '370px' }}
+        {%- else -%}
+          <span style="font-size:4rem;">💧</span>
+        {%- endif -%}
+        {%- if section.settings.tag_1 != blank -%}<div class="ev-tag ev-tag--a">{{ section.settings.tag_1 | escape }}</div>{%- endif -%}
+        {%- if section.settings.tag_2 != blank -%}<div class="ev-tag ev-tag--b">{{ section.settings.tag_2 | escape }}</div>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+<div class="ev-div"></div>
+
+{% schema %}
+{
+  "name": "Elevate hero",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured: PJV24 series" },
+    { "type": "text", "id": "heading_1", "label": "Heading line 1", "default": "Cordless Power." },
+    { "type": "text", "id": "heading_2", "label": "Heading line 2 (cyan)", "default": "Crystal Results." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>The <strong>PJV24 Rechargeable Spa & Pool Vacuum</strong> picks up sand, grit and debris with no hoses and no filter hookup. Built for weekly upkeep and deep cleans.</p>" },
+    { "type": "product", "id": "product", "label": "Featured product" },
+    { "type": "text", "id": "button_label", "label": "Buy button label", "default": "Buy now" },
+    { "type": "text", "id": "button_2_label", "label": "Second button label", "default": "Shop all" },
+    { "type": "url", "id": "button_2_link", "label": "Second button link" },
+    { "type": "text", "id": "tag_1", "label": "Floating tag 1", "default": "Cordless & rechargeable" },
+    { "type": "text", "id": "tag_2", "label": "Floating tag 2", "default": "No hoses needed" }
+  ],
+  "blocks": [
+    { "type": "badge", "name": "Badge", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Rechargeable" } ] }
+  ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Elevate hero" } ]
+}
+{% endschema %}
