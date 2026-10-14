@@ -161,14 +161,158 @@
         "i3",
         "i4"
       ]
+    },
+    "tutorials": {
+      "type": "elevate-tutorials",
+      "settings": {
+        "eyebrow": "\u25b6 Knowledge hub",
+        "heading_1": "Master your pool & spa:",
+        "heading_2": "tutorials by Ben.",
+        "text": "Video guides from weekly water balancing to full heater swaps, filmed by the Elevate Landscape & Spas team.",
+        "placeholder": "FIRST VIDEOS COMING SOON"
+      },
+      "blocks": {
+        "c0": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83d\udca7 Water chemistry"
+          }
+        },
+        "c1": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83d\udd27 Heater assembly"
+          }
+        },
+        "c2": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83e\uddf4 Chemical dosing"
+          }
+        },
+        "c3": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83c\udf21\ufe0f Troubleshooting"
+          }
+        },
+        "c4": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83e\udda0 BioClean protocol"
+          }
+        },
+        "c5": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83d\udcd0 Plumbing basics"
+          }
+        },
+        "c6": {
+          "type": "chip",
+          "settings": {
+            "text": "\ud83d\udd2c Water testing"
+          }
+        }
+      },
+      "block_order": [
+        "c0",
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ]
+    },
+    "wellness": {
+      "type": "elevate-coming-soon",
+      "settings": {
+        "eyebrow": "Elevate Lab",
+        "heading": "Our own water care line.",
+        "text": "Precision test kits and gentle treatments under the Elevate name. Launching soon.",
+        "cta_label": "Notify me",
+        "cta_link": "/pages/contact",
+        "alt_bg": true
+      },
+      "blocks": {
+        "w1": {
+          "type": "card",
+          "settings": {
+            "icon": "\ud83e\uddea",
+            "tag": "Coming soon",
+            "line": "Precision testing",
+            "title": "Elevate Lab Liquid Reagent Pro-Kit",
+            "desc": "Drop-test kit for pH, alkalinity and free chlorine. About 100 tests per bottle.",
+            "price": "$45"
+          }
+        },
+        "w2": {
+          "type": "card",
+          "settings": {
+            "icon": "\ud83c\udf3f",
+            "tag": "Coming soon",
+            "line": "Spa wellness",
+            "title": "Bio-Enzyme Scum Eliminator (32 oz)",
+            "desc": "Natural enzymes break down oils and lotions before they form a scum line.",
+            "price": "$28"
+          }
+        },
+        "w3": {
+          "type": "card",
+          "settings": {
+            "icon": "\ud83d\udce6",
+            "tag": "Subscribe & save",
+            "line": "Monthly delivery",
+            "title": "The Monthly Balance Box",
+            "desc": "Shock, clarifier and pH balancers delivered every month. Cancel anytime.",
+            "price": "$75/mo"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3"
+      ]
+    },
+    "postswim": {
+      "type": "elevate-coming-soon",
+      "settings": {
+        "eyebrow": "Post-swim skincare",
+        "heading": "After the swim, restore your skin.",
+        "text": "A body wash made for swimmers and spa lovers, to rinse away chlorine residue and put moisture back.",
+        "cta_label": "Pre-order: notify me",
+        "cta_link": "/pages/contact",
+        "note": "For external use only. This product is a cosmetic and is not intended to diagnose, treat, cure or prevent any condition."
+      },
+      "blocks": {
+        "p1": {
+          "type": "card",
+          "settings": {
+            "icon": "\ud83e\uddf4",
+            "tag": "Pre-order",
+            "line": "Post-spa therapy",
+            "title": "Vitamin C Chlorine-Wash Body Cleanser (12 oz)",
+            "desc": "Vitamin C to help wash away chlorine residue, aloe and vitamin E for moisture, eucalyptus and mint scent.",
+            "price": "$24"
+          }
+        }
+      },
+      "block_order": [
+        "p1"
+      ]
     }
   },
   "order": [
     "hero",
     "trust",
+    "tutorials",
     "testing",
     "parts",
     "cleaning",
-    "bundle"
+    "wellness",
+    "bundle",
+    "postswim"
   ]
 }

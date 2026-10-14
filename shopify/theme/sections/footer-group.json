@@ -1,0 +1,33 @@
+{
+  "type": "footer",
+  "name": "t:names.footer",
+  "sections": {
+    "ev_footer": {
+      "type": "elevate-footer",
+      "settings": {},
+      "blocks": {
+        "l1": {
+          "type": "links",
+          "settings": {
+            "heading": "Shop",
+            "menu": "main-menu"
+          }
+        },
+        "l2": {
+          "type": "links",
+          "settings": {
+            "heading": "Help",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2"
+      ]
+    }
+  },
+  "order": [
+    "ev_footer"
+  ]
+}

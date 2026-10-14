@@ -1,0 +1,45 @@
+<section class="ev ev-sec ev-grid-bg" id="tutorials">
+  <div class="ev-wrap">
+    <div class="ev-sec__head">
+      <div class="ev-label ev-label--center">{{ section.settings.eyebrow | escape }}</div>
+      <h2>{{ section.settings.heading_1 | escape }} <span class="ev-cyan">{{ section.settings.heading_2 | escape }}</span></h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+    <div class="ev-video">
+      {%- if section.settings.video != blank and section.settings.video.type == 'youtube' -%}
+        <iframe src="https://www.youtube-nocookie.com/embed/{{ section.settings.video.id }}?rel=0&modestbranding=1" title="{{ section.settings.heading_1 | escape }}" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      {%- else -%}
+        <div class="ev-video__ph">
+          <div class="ev-video__play">▶</div>
+          <div class="ev-mono ev-cyan" style="font-size:.75rem;letter-spacing:.14em;">{{ section.settings.placeholder | escape }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if section.blocks.size > 0 -%}
+      <div class="ev-chips">
+        {%- for block in section.blocks -%}
+          <span class="ev-badge" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+<div class="ev-div"></div>
+
+{% schema %}
+{
+  "name": "Elevate tutorials",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "▶ Knowledge hub" },
+    { "type": "text", "id": "heading_1", "label": "Heading", "default": "Master your pool & spa:" },
+    { "type": "text", "id": "heading_2", "label": "Heading (cyan)", "default": "tutorials by Ben." },
+    { "type": "text", "id": "text", "label": "Text", "default": "Video guides from weekly water balancing to full heater swaps, filmed by the Elevate Landscape & Spas team." },
+    { "type": "video_url", "id": "video", "label": "YouTube video", "accept": ["youtube"] },
+    { "type": "text", "id": "placeholder", "label": "Placeholder text (no video yet)", "default": "FIRST VIDEOS COMING SOON" }
+  ],
+  "blocks": [ { "type": "chip", "name": "Topic", "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Topic" } ] } ],
+  "max_blocks": 10,
+  "presets": [ { "name": "Elevate tutorials" } ]
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+<section class="ev ev-sec" style="{% if section.settings.alt_bg %}background:var(--ev-navy-mid);{% endif %}">
+  <div class="ev-wrap">
+    <div class="ev-sec__head">
+      <div class="ev-label ev-label--center">{{ section.settings.eyebrow | escape }}</div>
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text | escape }}</p>{%- endif -%}
+    </div>
+    <div class="ev-cards">
+      {%- for block in section.blocks -%}
+        <div class="ev-card" {{ block.shopify_attributes }}>
+          <span class="ev-badge ev-card__sale">{{ block.settings.tag | escape }}</span>
+          <div class="ev-card__img"><span style="font-size:3.4rem;">{{ block.settings.icon }}</span></div>
+          <div class="ev-card__body">
+            <div class="ev-card__vendor">{{ block.settings.line | escape }}</div>
+            <div class="ev-card__title">{{ block.settings.title | escape }}</div>
+            <p class="ev-muted" style="font-size:.85rem;">{{ block.settings.desc | escape }}</p>
+            <div class="ev-card__price"><span class="ev-price">{{ block.settings.price | escape }}</span></div>
+            <a href="{{ section.settings.cta_link | default: '/pages/contact' }}" class="ev-btn ev-btn--outline ev-btn--block">{{ section.settings.cta_label | escape }}</a>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.note != blank -%}<p class="ev-small" style="text-align:center;margin-top:24px;">{{ section.settings.note | escape }}</p>{%- endif -%}
+  </div>
+</section>
+<div class="ev-div"></div>
+
+{% schema %}
+{
+  "name": "Elevate coming soon",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Elevate Lab" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Coming soon." },
+    { "type": "text", "id": "text", "label": "Text" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Notify me" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "text", "id": "note", "label": "Small note" },
+    { "type": "checkbox", "id": "alt_bg", "label": "Lighter navy background", "default": false }
+  ],
+  "blocks": [ { "type": "card", "name": "Card", "settings": [
+    { "type": "text", "id": "icon", "label": "Emoji", "default": "🧪" },
+    { "type": "text", "id": "tag", "label": "Tag", "default": "Coming soon" },
+    { "type": "text", "id": "line", "label": "Line label", "default": "Elevate Lab" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Product" },
+    { "type": "text", "id": "desc", "label": "Description" },
+    { "type": "text", "id": "price", "label": "Price", "default": "$0" }
+  ] } ],
+  "max_blocks": 6,
+  "presets": [ { "name": "Elevate coming soon" } ]
+}
+{% endschema %}

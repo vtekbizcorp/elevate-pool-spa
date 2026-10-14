@@ -118,3 +118,30 @@ h1,h2,h3,h4,.h1,.h2,.h3,.h4{font-family:'Syne',sans-serif;}
   .ev-sec{padding:64px 0;}
   .ev-wrap{padding:0 16px;}
 }
+
+/* Tutorials */
+.ev-video{max-width:860px;margin:0 auto;aspect-ratio:16/9;border-radius:12px;overflow:hidden;border:1px solid rgba(0,212,255,.25);background:radial-gradient(circle at 50% 40%,#12304e,#07111e);box-shadow:0 0 50px rgba(0,212,255,.12);}
+.ev-video iframe{width:100%;height:100%;border:0;display:block;}
+.ev-video__ph{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
+.ev-video__play{width:78px;height:78px;border-radius:50%;background:var(--ev-cyan);color:var(--ev-navy);display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 0 40px rgba(0,212,255,.5);padding-left:6px;}
+.ev-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:26px;}
+
+/* Footer */
+.ev-footer{background:var(--ev-navy-mid);padding:64px 0 32px;border-top:1px solid rgba(0,212,255,.08);}
+.ev-footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;}
+.ev-footer__h{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:14px;color:var(--ev-white);}
+.ev-footer__links{display:grid;gap:9px;}
+.ev-footer__links a{color:var(--ev-muted);font-size:.82rem;transition:color .2s;}
+.ev-footer__links a:hover{color:var(--ev-cyan);}
+.ev-footer__pay{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
+.ev-payicon{height:24px;width:auto;}
+.ev-footer__bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.73rem;color:var(--ev-muted);}
+.ev-footer__bottom a{color:var(--ev-cyan);}
+.ev-footer__bottom p{margin:0;}
+
+/* Header + announcement polish */
+.header-section, #header-component{border-bottom:1px solid rgba(0,212,255,.12);}
+.header-announcements, .announcement-bar{background:var(--ev-navy-mid)!important;}
+.announcement-bar__text, .header-announcements p{font-family:'JetBrains Mono',monospace!important;letter-spacing:.12em;text-transform:uppercase;color:var(--ev-cyan)!important;font-size:.66rem!important;}
+
+@media (max-width:900px){.ev-footer__grid{grid-template-columns:1fr 1fr;}.ev-footer__grid>div:first-child{grid-column:1/-1;}}
