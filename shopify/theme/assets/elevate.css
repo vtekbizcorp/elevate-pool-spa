@@ -145,3 +145,4 @@ h1,h2,h3,h4,.h1,.h2,.h3,.h4{font-family:'Syne',sans-serif;}
 .announcement-bar__text, .header-announcements p{font-family:'JetBrains Mono',monospace!important;letter-spacing:.12em;text-transform:uppercase;color:var(--ev-cyan)!important;font-size:.66rem!important;}
 
 @media (max-width:900px){.ev-footer__grid{grid-template-columns:1fr 1fr;}.ev-footer__grid>div:first-child{grid-column:1/-1;}}
+
