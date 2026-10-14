@@ -47,3 +47,9 @@ html.ev-light .ev-footer .ev-cyan, html.ev-light .ev-footer__bottom a{color:#4fd
 .ev-theme-toggle{position:fixed;left:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;gap:7px;font-family:'Syne',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.04em;padding:9px 15px;border-radius:20px;cursor:pointer;background:rgba(6,16,30,.85);color:#00d4ff;border:1.5px solid rgba(0,212,255,.4);backdrop-filter:blur(10px);box-shadow:0 6px 20px rgba(0,0,0,.35);transition:all .2s;}
 .ev-theme-toggle:hover{border-color:#00d4ff;}
 html.ev-light .ev-theme-toggle{background:#ffffff;color:#0077aa;border-color:rgba(0,119,170,.45);box-shadow:0 6px 20px rgba(13,31,51,.15);}
+
+/* Toggle placed inside the header nav */
+.ev-theme-toggle.ev-theme-toggle--nav{position:static;box-shadow:none;backdrop-filter:none;padding:7px 14px;margin-right:6px;background:rgba(0,212,255,.1);border:1.5px solid rgba(0,212,255,.3);align-self:center;white-space:nowrap;}
+html.ev-light .ev-theme-toggle.ev-theme-toggle--nav{background:rgba(0,119,170,.08);box-shadow:none;}
+html.ev-light #header-group .ev-theme-toggle{color:#0077aa;}
+@media (max-width:749px){.ev-theme-toggle.ev-theme-toggle--nav{padding:6px 9px;margin-right:2px;}.ev-theme-toggle--nav #ev-theme-label{display:none;}}
